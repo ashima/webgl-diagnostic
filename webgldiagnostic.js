@@ -54,7 +54,11 @@ WebGLDiagnostic.report = function(canvasid) {
     return gl.getParameter(e);
   }
   function getExt(ext) {
-    return (gl.getExtension(ext)!=null);
+    if (gl.getExtension) {
+      return (gl.getExtension(ext)!=null);
+    } else {
+      return false;
+    }
   }
 
   info += "WebGL Support: ";
