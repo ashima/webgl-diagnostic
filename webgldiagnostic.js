@@ -29,10 +29,11 @@ WebGLDiagnostic.webGLContext = function(canvasid) {
 
 WebGLDiagnostic.driverLink = function(canvasid) {
   var gl = this.webGLContext(canvasid);
+  if (!gl) { return null; }
   var renderer = gl.getParameter(gl.RENDERER);
 
   if (navigator.userAgent.match(/Mac OS X/)) {
-    if (navigator.userAgent.match(/Mac OS X 10_6/)) {
+    if (navigator.userAgent.match(/Mac OS X 10.6/)) {
       return null;
     } else {
       return this.drivers["osx"];
