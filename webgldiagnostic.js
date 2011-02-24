@@ -10,7 +10,8 @@ WebGLDiagnostic.exts = [
 WebGLDiagnostic.drivers = {
     "nvidia":"http://www.nvidia.com/Download/index.aspx",
     "ati":"http://support.amd.com/us/gpudownload/Pages/index.aspx",
-    "mozilla":"https://www.khronos.org/webgl/public-mailing-list/archives/1011/msg00220.html" };
+    "mozilla":"https://www.khronos.org/webgl/public-mailing-list/archives/1011/msg00220.html",
+    "osx":"http://www.apple.com/macosx/"};
 
 WebGLDiagnostic.isWebGLSupported = function() {
   return window.WebGLRenderingContext != null;
@@ -29,6 +30,15 @@ WebGLDiagnostic.webGLContext = function(canvasid) {
 WebGLDiagnostic.driverLink = function(canvasid) {
   var gl = this.webGLContext(canvasid);
   var renderer = gl.getParameter(gl.RENDERER);
+
+  if (navigator.userAgent.match(/Mac OS X/)) {
+    if (navigator.userAgent.match(/Mac OS X 10_6/)) {
+      return null;
+    } else {
+      return this.drivers["osx"];
+    }
+  }
+
   for (var v in this.drivers) {
     if ((new RegExp(v, "i")).test(renderer)) {
       return this.drivers[v];      
