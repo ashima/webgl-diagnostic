@@ -7,6 +7,11 @@ WebGLDiagnostic.exts = [
 "OES_texture_float","OES_texture_half_float","WEBKIT_lose_context",
 "OES_standard_derivatives","OES_vertex_array_object" ];
 
+WebGLDiagnostic.drivers = {
+    "nvidia":"http://www.nvidia.com/Download/index.aspx",
+    "ati":"http://support.amd.com/us/gpudownload/Pages/index.aspx",
+    "mozilla":"https://www.khronos.org/webgl/public-mailing-list/archives/1011/msg00220.html" };
+
 WebGLDiagnostic.isWebGLSupported = function() {
   return window.WebGLRenderingContext != null;
 };
@@ -19,6 +24,17 @@ WebGLDiagnostic.webGLContext = function(canvasid) {
              && i < this.context_ids.length; i++) {}
 
   return gl;
+};
+
+WebGLDiagnostic.driverLink = function(canvasid) {
+  var gl = this.webGLContext(canvasid);
+  var renderer = gl.getParameter(gl.RENDERER);
+  for (var v in this.drivers) {
+    if ((new RegExp(v, "i")).test(renderer)) {
+      return this.drivers[v];      
+    }
+  }
+  return null;
 };
 
 WebGLDiagnostic.report = function(canvasid) {

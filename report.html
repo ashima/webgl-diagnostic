@@ -4,10 +4,14 @@
 </head>
 <body onload="var i = WebGLDiagnostic.report('test-canvas');
 	      var r = document.getElementById('webgl-report');
-	      r.innerHTML = i;">
+	      var dl= document.getElementById('driverlink');
+	      dl.href=WebGLDiagnostic.driverLink('test-canvas');
+	      r.innerHTML = i;
+	      ">
 <canvas id="test-canvas" style="display: none" width="1"
 	height="1"></canvas>
 
+<a href="" id="driverlink">Update Your Video Card Drivers</a>
 <pre id="webgl-report"></pre>
 
 </body
