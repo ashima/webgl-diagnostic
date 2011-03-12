@@ -1,18 +1,24 @@
 <html>
 <head>
 <script type="text/javascript" src="webgldiagnostic.js"></script>
+<script type="text/javascript">
+function main() {
+  var i = WebGLDiagnostic.report('test-canvas');
+  var r = document.getElementById('webgl-report');
+  var dl= document.getElementById('driverlink');
+  var dhref = WebGLDiagnostic.driverLink('test-canvas');
+  if (dhref==null || dhref=="") { dl.innerHTML=""; }
+  else { dl.href=dhref; }
+  r.innerHTML = i;
+}
+</script>
 </head>
-<body onload="var i = WebGLDiagnostic.report('test-canvas');
-	      var r = document.getElementById('webgl-report');
-	      var dl= document.getElementById('driverlink');
-	      dl.href=WebGLDiagnostic.driverLink('test-canvas');
-	      r.innerHTML = i;
-	      ">
+<body onload="main()">
 <canvas id="test-canvas" style="display: none" width="1"
 	height="1"></canvas>
 
 <a href="" id="driverlink">Update Your Video Card Drivers</a>
 <pre id="webgl-report"></pre>
 
-</body
+</body>
 </html>

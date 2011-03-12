@@ -13,6 +13,20 @@ WebGLDiagnostic.drivers = {
     "mozilla":"https://www.khronos.org/webgl/public-mailing-list/archives/1011/msg00220.html",
     "osx":"http://www.apple.com/macosx/"};
 
+WebGLDiagnostic.caps = {
+    "renderbuffer_depth":function(gl) {
+	var db = gl.createRenderbuffer();
+	gl.bindRenderbuffer(gl.RENDERBUFFER,db);
+	gl.renderbufferStorage(gl.RENDERBUFFER,
+			       gl.DEPTH_COMPONENT16,
+			       1,1);
+	var rbdepth = gl.getRenderbufferParameter(gl.RENDERBUFFER,
+						  gl.RENDERBUFFER_DEPTH_SIZE);
+	gl.deleteRenderbuffer(db);
+	return rbdepth;
+    }
+};
+
 WebGLDiagnostic.isWebGLSupported = function() {
   return window.WebGLRenderingContext != null;
 };
@@ -100,6 +114,10 @@ WebGLDiagnostic.report = function(canvasid) {
       var vpdims = gl.getParameter(gl.MAX_VIEWPORT_DIMS);
       if (vpdims != null) { vpdims = vpdims[0]+" x "+vpdims[1]; }
       info += "Max Viewport Dims: "+vpdims+"\n";
+
+      for (cap in this.caps) {
+          info += cap+": "+this.caps[cap](gl)+"\n";
+      }
 
       info += "\n";
 
