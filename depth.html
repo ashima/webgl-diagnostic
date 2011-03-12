@@ -1,0 +1,37 @@
+<html>
+<head>
+<script type="text/javascript">
+// bits from https://github.com/ashima/webgl-diagnostic/
+function WebGLDiagnostic() {}
+
+WebGLDiagnostic.context_ids = [
+"webgl","experimental-webgl","moz-webgl","webkit-3d" ];
+
+WebGLDiagnostic.webGLContext = function(canvasid) {
+  var c = document.getElementById(canvasid);
+  var gl;
+
+  for ( i=0; (gl = c.getContext(this.context_ids[i])) == null
+             && i < this.context_ids.length; i++) {}
+
+  return gl;
+};
+</script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<script type="text/javascript">
+var gl = WebGLDiagnostic.webGLContext("canvas");
+var depth_bits = gl.getParameter(gl.DEPTH_BITS);
+
+var db = gl.createRenderbuffer();
+gl.bindRenderbuffer(gl.RENDERBUFFER,db);
+gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16,640,480);
+var drawDepth =
+gl.getRenderbufferParameter(gl.RENDERBUFFER,gl.RENDERBUFFER_DEPTH_SIZE);
+
+document.write("<p>DEPTH_BITS sez "+depth_bits+"</p>");
+document.write("<p>Draw Depth sez "+drawDepth+"</p>");
+</script>
+</body>
+</html>
