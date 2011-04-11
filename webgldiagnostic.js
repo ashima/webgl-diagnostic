@@ -64,24 +64,26 @@ WebGLDiagnostic.driverLink = function(canvasid) {
 
 WebGLDiagnostic.report = function(canvasid) {
   var info = "";
-  var gl = this.webGLContext(canvasid);
-  function getParameter(e) {
-    return gl.getParameter(e);
-  }
-  function getExt(ext) {
-    if (gl.getExtension) {
-      return (gl.getExtension(ext)!=null);
-    } else {
-      return false;
-    }
-  }
 
   info += "WebGL Support: ";
 
-  var webglFunctional = gl != null;
-
   if (this.isWebGLSupported()) {
     info += "yes";
+
+    var gl = this.webGLContext(canvasid);
+    function getParameter(e) {
+      return gl.getParameter(e);
+    }
+    function getExt(ext) {
+      if (gl.getExtension) {
+        return (gl.getExtension(ext)!=null);
+      } else {
+        return false;
+      }
+    }
+
+    var webglFunctional = gl != null;
+
     if (webglFunctional) {
       var params = [["Version", gl.VERSION],
                     ["Vendor", gl.VENDOR],
