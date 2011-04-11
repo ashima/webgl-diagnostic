@@ -27,11 +27,11 @@ var depth_bits = gl.getParameter(gl.DEPTH_BITS);
 var db = gl.createRenderbuffer();
 gl.bindRenderbuffer(gl.RENDERBUFFER,db);
 gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16,640,480);
-var drawDepth =
+var rb_depth_bits =
 gl.getRenderbufferParameter(gl.RENDERBUFFER,gl.RENDERBUFFER_DEPTH_SIZE);
 
 document.write("<p>DEPTH_BITS sez "+depth_bits+"</p>");
-document.write("<p>Draw Depth sez "+drawDepth+"</p>");
+document.write("<p>Draw Depth sez "+rb_depth_bits+"</p>");
 </script>
 </body>
 </html>
