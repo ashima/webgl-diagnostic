@@ -1,0 +1,23 @@
+#!/bin/sh
+
+RCPT=sheets@ashimaarts.com
+
+# get the files
+wget http://get.webgl.org/ -O get.webgl.org.html
+wget http://get.webgl.org/troubleshooting/ -O troubleshooting.html
+wget http://get.webgl.org/troubleshooting/DoNotCopyOrLinkThisFileElseYouWillNotGetAutoUpdatedHelpForYourUsers.js -O detect.js
+
+# diff against last sync
+diff get.webgl.org.html get.webgl.org.html.sync > get.webgl.org.html.diff
+diff troubleshooting.html troubleshooting.html.sync > troubleshooting.html.diff
+diff detect.js detect.js.sync > detect.js.diff
+
+# compose the email
+cp email_header.txt email.txt
+echo "Main index:" >> email.txt
+cat get.webgl.org.html.diff >> email.txt
+echo "Troubleshooting index:" >> email.txt
+cat troubleshooting.html.diff >> email.txt
+echo "Detect script:" >> email.txt
+cat detect.js.diff >> email.txt
+mail -s "get.webgl.org Update Report" $RCPT < email.txt
