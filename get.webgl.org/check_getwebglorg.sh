@@ -14,6 +14,8 @@ diff detect.js detect.js.sync > detect.js.diff
 
 # compose the email
 cp email_header.txt email.txt
+echo -n "Retrieved at: " >> email.txt
+date >> email.txt
 echo "Main index:" >> email.txt
 cat get.webgl.org.html.diff >> email.txt
 echo "Troubleshooting index:" >> email.txt
