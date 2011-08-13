@@ -1,6 +1,10 @@
 #!/bin/sh
 
 RCPT=sheets@ashimaarts.com
+WD=/home/sheets/wc/webgl-diagnostic/get.webgl.org/
+
+# switch to working directory
+cd $WD
 
 # get the files
 wget http://get.webgl.org/ -O get.webgl.org.html
