@@ -1,2 +1,5 @@
 *.sync
-
+*.html
+*.js
+*.diff
+email.txt
