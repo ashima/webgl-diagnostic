@@ -1,5 +1,56 @@
 function WebGLDiagnostic() {}
 
+// string is haystack, subString is needle
+// versionSearch is version label, prop is alternative property existence test
+// p is 0-indexed priority to delay very common needle searches
+WebGLDiagnostic.browsers = {
+    "Chrome" : { string: navigator.userAgent, subString: "Chrome",
+		 name: "Google Chrome",
+		 urls: { trouble: "http://www.google.com/support/chrome/bin/answer.py?answer=1220892",
+			 download: "http://www.google.com/chrome/",
+			 upgrade: "http://www.google.com/support/chrome/bin/answer.py?answer=95346"} },
+    "OmniWeb" : { string: navigator.userAgent, subString: "OmniWeb",
+		  versionSearch: "OmniWeb/" },
+    "Safari" : { string: navigator.vendor, subString: "Apple",
+		 versionSearch: "Version",
+		 urls: { trouble: "", upgrade: "" },
+		 platforms: {
+		     "iPhone/iPod": { trouble: "", upgrade: ""},
+		     "iPad": { trouble: "", upgrade: ""},
+		     "Mac": { trouble: "", upgrade: ""}
+		 }},
+    "Android" : { string: navigator.userAgent, subString: "Android" },
+    "Opera" : { prop: window.opera },
+    "iCab" : { string: navigator.vendor, subString: "iCab" },
+    "Konqueror" : { string: navigator.vendor, subString: "KDE" },
+    "Camino" : { string: navigator.vendor, subString: "Camino" },
+    // for newer Netscapes (6+)
+    "Netscape" : { string: navigator.userAgent,	subString: "Netscape" },
+    "Explorer" : { string: navigator.userAgent, subString: "MSIE",
+		   versionSearch: "MSIE" },
+    "Firefox" : { p: 1, string: navigator.userAgent, subString: "Firefox" },
+    "Mozilla" : { p: 2, string: navigator.userAgent, subString: "Gecko",
+		  versionSearch: "rv" },
+    // for older Netscapes (4-)
+    "OldNetscape" : { p: 3, string: navigator.userAgent, subString: "Mozilla",
+		      versionSearch: "Mozilla" }
+};
+
+WebGLDiagnostic.platforms = {
+    "Windows" : { string: navigator.platform, subString: "Win",
+		  browsers: ["Firefox","Chrome"] }
+};
+
+WebGLDiagnostic.detectBrowser = function() {
+    for (var b in this.browsers) {
+
+    }
+};
+
+WebGLDiagnostic.detectPlatform = function() {
+
+};
+
 WebGLDiagnostic.context_ids = [
 "webgl","experimental-webgl","moz-webgl","webkit-3d" ];
 
