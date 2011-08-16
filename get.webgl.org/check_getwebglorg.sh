@@ -6,6 +6,20 @@ WD=/home/sheets/wc/webgl-diagnostic/get.webgl.org/
 # switch to working directory
 cd $WD
 
+# make empty syncs if none exist
+if [ ! -e detect.js.sync ]
+then
+  touch detect.js.sync
+fi
+if [ ! -e get.webgl.org.html.sync ]
+then
+  touch get.webgl.org.html.sync
+fi
+if [ ! -e troubleshooting.html.sync ]
+then
+  touch troubleshooting.html.sync
+fi
+
 # get the files
 wget http://get.webgl.org/ -O get.webgl.org.html
 wget http://get.webgl.org/troubleshooting/ -O troubleshooting.html
