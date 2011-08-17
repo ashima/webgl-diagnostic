@@ -4,54 +4,84 @@ function WebGLDiagnostic() {}
 // versionSearch is version label, prop is alternative property existence test
 // p is 0-indexed priority to delay very common needle searches
 WebGLDiagnostic.browsers = {
-    "Chrome" : { string: navigator.userAgent, subString: "Chrome",
-		 name: "Google Chrome",
-		 urls: { trouble: "http://www.google.com/support/chrome/bin/answer.py?answer=1220892",
-			 download: "http://www.google.com/chrome/",
-			 upgrade: "http://www.google.com/support/chrome/bin/answer.py?answer=95346"} },
-    "OmniWeb" : { string: navigator.userAgent, subString: "OmniWeb",
-		  versionSearch: "OmniWeb/", name: "OmniWeb" },
-    "Safari" : { string: navigator.vendor, subString: "Apple",
-		 versionSearch: "Version", name: "WebKit Developer Build",
-		 urls: { trouble: "http://www.webkit.org/blog/603/webgl-now-available-in-webkit-nightlies/",
-			 download: "http://www.webkit.org/",
-			 upgrade: "http://www.webkit.org/" },
-		 platforms: {
-		     "iPhone/iPod": { trouble: "http://www.apple.com/support/iphone/",
-				      upgrade: "http://www.apple.com/ios/"},
-		     "iPad": { trouble: "http://www.apple.com/support/ipad/",
-			       upgrade: "http://www.apple.com/ios/"},
-		     "Mac": { trouble: "http://www.webkit.org/blog/603/webgl-now-available-in-webkit-nightlies/",
-			      upgrade: "http://www.webkit.org/"}
-		 }},
-    "Android" : { string: navigator.userAgent, subString: "Android",
-		  name: "Google Android" },
-    "Opera" : { prop: window.opera, name: "Opera" },
-    "iCab" : { string: navigator.vendor, subString: "iCab", name: "iCab" },
-    "Konqueror" : { string: navigator.vendor, subString: "KDE",
-		    name: "Konqueror" },
-    "Camino" : { string: navigator.vendor, subString: "Camino",
-		 name: "Camino" },
+    "Chrome" :
+    { string: navigator.userAgent, subString: "Chrome",
+      name: "Google Chrome",
+      urls:
+      { trouble: "http://www.google.com/support/chrome/bin/answer.py?answer=1220892",
+	download: "http://www.google.com/chrome/",
+	upgrade: "http://www.google.com/support/chrome/bin/answer.py?answer=95346"} },
+
+    "OmniWeb" :
+    { string: navigator.userAgent, subString: "OmniWeb",
+      versionSearch: "OmniWeb/", name: "OmniWeb" },
+
+    "Safari" :
+    { string: navigator.vendor, subString: "Apple",
+      versionSearch: "Version", name: "WebKit Developer Build",
+      urls:
+      { trouble: "http://www.webkit.org/blog/603/webgl-now-available-in-webkit-nightlies/",
+	download: "http://www.webkit.org/",
+	upgrade: "http://www.webkit.org/" },
+      platforms:
+      { "iPhone/iPod": { trouble: "http://www.apple.com/support/iphone/",
+			 upgrade: "http://www.apple.com/ios/"},
+	"iPad": { trouble: "http://www.apple.com/support/ipad/",
+		  upgrade: "http://www.apple.com/ios/"},
+	"Mac": { trouble: "http://www.webkit.org/blog/603/webgl-now-available-in-webkit-nightlies/",
+		 upgrade: "http://www.webkit.org/"}
+      }},
+
+    "Android" :
+    { string: navigator.userAgent, subString: "Android",
+      name: "Google Android" },
+
+    "Opera" :
+    { prop: window.opera, name: "Opera" },
+    
+    "iCab" :
+    { string: navigator.vendor, subString: "iCab", name: "iCab" },
+    
+    "Konqueror" :
+    { string: navigator.vendor, subString: "KDE",
+      name: "Konqueror" },
+    
+    "Camino" :
+    { string: navigator.vendor, subString: "Camino",
+      name: "Camino" },
+
     // for newer Netscapes (6+)
-    "Netscape" : { string: navigator.userAgent,	subString: "Netscape",
-		   name: "Netscape Navigator" },
-    "Explorer" : { string: navigator.userAgent, subString: "MSIE",
-		   versionSearch: "MSIE", name: "Microsoft Internet Explorer",
-		   urls: { trouble: "http://www.google.com/support/chrome/bin/answer.py?answer=1220892",
-			   download: "http://code.google.com/chrome/chromeframe/",
-			   upgrade: "http://code.google.com/chrome/chromeframe/" } },
-    "Firefox" : { p: 1, string: navigator.userAgent, subString: "Firefox",
-		  name: "Mozilla Firefox",
-		  urls: { trouble: "https://support.mozilla.com/en-US/kb/how-do-i-upgrade-my-graphics-drivers",
-			  download: "http://www.mozilla.com/en-US/firefox/new/",
-			  upgrade: "http://www.mozilla.com/en-US/firefox/new/" } },
-    "Mozilla" : { p: 2, string: navigator.userAgent, subString: "Gecko",
-		  versionSearch: "rv", name: "Mozilla Suite" },
+    "Netscape" :
+    { string: navigator.userAgent,	subString: "Netscape",
+      name: "Netscape Navigator" },
+
+    "Explorer" :
+    { string: navigator.userAgent, subString: "MSIE",
+      versionSearch: "MSIE", name: "Microsoft Internet Explorer",
+      urls:
+      { trouble: "http://www.google.com/support/chrome/bin/answer.py?answer=1220892",
+	download: "http://code.google.com/chrome/chromeframe/",
+	upgrade: "http://code.google.com/chrome/chromeframe/" } },
+
+    "Firefox" :
+    { p: 1, string: navigator.userAgent, subString: "Firefox",
+      name: "Mozilla Firefox",
+      urls: { trouble: "https://support.mozilla.com/en-US/kb/how-do-i-upgrade-my-graphics-drivers",
+	      download: "http://www.mozilla.com/en-US/firefox/new/",
+	      upgrade: "http://www.mozilla.com/en-US/firefox/new/" } },
+
+    "Mozilla" :
+    { p: 2, string: navigator.userAgent, subString: "Gecko",
+      versionSearch: "rv", name: "Mozilla Suite" },
+
     // for older Netscapes (4-)
-    "OldNetscape" : { p: 3, string: navigator.userAgent, subString: "Mozilla",
-		      versionSearch: "Mozilla", name: "Netscape Navigator" },
-    "unknown" : { p: 4, string: navigator.userAgent, subString: "",
-		  name: "Unknown Browser" }
+    "OldNetscape" :
+    { p: 3, string: navigator.userAgent, subString: "Mozilla",
+      versionSearch: "Mozilla", name: "Netscape Navigator" },
+
+    "unknown" :
+    { p: 4, string: navigator.userAgent, subString: "",
+      name: "Unknown Browser" }
 };
 
 WebGLDiagnostic.platforms = {
@@ -115,9 +145,9 @@ WebGLDiagnostic.detectBrowser = function() {
 	var bn, bv, delay = {};
 	for (bn in bd) {
 	    bv = bd[bn];
-	    if (typeof(bv.p) === "undefined") { bv.p = 0; }
+	    if (typeof(bv.p) == "undefined") { bv.p = 0; }
 	    if (p >= bv.p) {
-		if ((bv.string && bv.string.indexOf(bv.subString) !== -1)
+		if ((bv.string && bv.string.indexOf(bv.subString) != -1)
 		    || bv.prop) {
 		    return diag.browserWithIdVersion(bn,bv);
 		}
@@ -137,7 +167,7 @@ WebGLDiagnostic.detectPlatform = function() {
 	var pn, pv;
 	for (pn in pd) {
 	    pv = pd[pn];
-	    if (pv.string && pv.string.indexOf(pv.subString) !== -1) {
+	    if (pv.string && pv.string.indexOf(pv.subString) != -1) {
 		return diag.platformWithIdBrowsers(pn,pv);
 	    }
 	}
@@ -175,15 +205,16 @@ WebGLDiagnostic.caps = {
 };
 
 WebGLDiagnostic.isWebGLSupported = function() {
-  return window.WebGLRenderingContext !== null;
+  return "WebGLRenderingContext" in window;
 };
 
 WebGLDiagnostic.webGLContext = function(canvasid) {
   var gl, c = document.getElementById(canvasid), i;
 
   for ( i=0; i < this.context_ids.length; i++) {
-      gl = c.getContext(this.context_ids[i]);
-      if (gl !== null) { this.context_id = this.context_ids[i]; return gl; }
+      try { gl = c.getContext(this.context_ids[i]); }
+      catch (x) { return null; }
+      if (gl != null) { this.context_id = this.context_ids[i]; return gl; }
   }
   return gl;
 };
@@ -216,7 +247,7 @@ WebGLDiagnostic.report = function(canvasid) {
     
     function getExt(gl,ext) {
 	if (gl.getExtension) {
-            return (gl.getExtension(ext) !== null);
+            return (gl.getExtension(ext) != null);
 	} else {
             return false;
 	}
@@ -227,7 +258,7 @@ WebGLDiagnostic.report = function(canvasid) {
 	
 	gl = this.webGLContext(canvasid);
 	
-	webglFunctional = gl !== null;
+	webglFunctional = gl != null;
 	
 	if (webglFunctional) {
 	    params = [
@@ -261,7 +292,7 @@ WebGLDiagnostic.report = function(canvasid) {
 	    }
 	    
 	    vpdims = gl.getParameter(gl.MAX_VIEWPORT_DIMS);
-	    if (vpdims !== null) { vpdims = vpdims[0]+" x "+vpdims[1]; }
+	    if (vpdims != null) { vpdims = vpdims[0]+" x "+vpdims[1]; }
 	    info += "Max Viewport Dims: "+vpdims+"\n";
 	    
 	    for (cap in this.caps) {
