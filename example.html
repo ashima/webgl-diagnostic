@@ -1,0 +1,116 @@
+<html>
+<head>
+<style>
+#webgl-message { position: absolute; width: 50%; top: 20% }
+#bugreport { display: none }
+#bugthanks { display: none }
+</style>
+<script type="text/javascript" src="webgldiagnostic.js"></script>
+<script type="text/javascript">
+var canvasid = "test-canvas";
+var contentUrl = "http://ashimagames.com/ooman/tutorial.html";
+var contentText = "Enjoy Ooman Tutorial Level";
+var contentBug = "http://ashimagames.com/FormToEmail.php";
+
+var diag = WebGLDiagnostic;
+var report;
+var english = {
+  no_webgl: function (p,b) {
+    var i, browserlist = [], link;
+    var ident = ("It looks like you are using "+b.name+" "+b.version
+                 +" which does not support WebGL. ")
+    if (b.urls && b.urls.upgrade) { // upgrade
+      return (ident+"Please <a href='"+b.urls.upgrade
+              +"'>upgrade</a> your browser to view WebGL content.");
+    } else { // change browser
+      for (i = 0; i < p.browsers.length; i++) {
+        link = ("<a href='"+p.browsers[i].urls.download+"'>"
+	        +p.browsers[i].name+"</a>");
+        browserlist[browserlist.length] = "<li>"+link+"</li>";
+      }
+      return (ident+"Unfortunately, there are no newer versions of your "
+              +"browser with WebGL support; however, the following browsers "
+              +"with WebGL support may be available for your system:"
+              +"<ul>"+browserlist.join("")+"</ul>");
+    }
+  },
+  yes_webgl: function (url,txt,bug,b) {
+    var trouble = ("Trouble viewing the content? "
+		   +"<a href='#' onclick='showBugReport()'>Report a problem</a>.");
+    var bugreport = "<form method='POST' action='"+bug+"' id='bugreport'>";
+    bugreport += "<table>";
+    bugreport += "<tr><td>Email</td><td><input type='text' name='email'></td></tr>";
+    bugreport += "<tr><td>Description</td><td>"
+    bugreport += "<textarea name='comments' rows='2' cols='40'></textarea></td></tr>";
+    bugreport += "<tr><td></td><td>";
+    bugreport += "<input type='hidden' name='diagnostics' value='"+report+"'>"
+    bugreport += "<input type='submit' value='Send' onsubmit='sendBugReport()'>";
+    bugreport += "</td></tr>";
+    bugreport += "</table></form>";
+    bugreport += "<div id='bugthanks'>Thanks for your report!</div>";
+    return ("<a href='"+url+"'>"+txt+"</a><br>"+trouble+bugreport);
+  },
+  trouble_webgl: function (b) {
+    var msg = ("Your browser appears to support WebGL but it is disabled or "
+	       +"unavailable. ");
+    var support;
+
+    if (b.id == "unknown") {
+      support = "Visit your browser's support site for more information.";
+    } else {
+      support = ("<a href='"+b.urls.trouble+"'>Visit "+b.name+"'s support site</a> "
+		 +"for more information.");
+    }
+
+    var driver = diag.driverLink(canvasid);
+    if (driver === null) {
+      msg+=("A common cause of WebGL unavailability is out-of-date "
+            +"graphics drivers. ");
+    } else {
+      msg+=("It may help to <a href='"+driver+"'>upgrade your graphics drivers</a> "
+	    +"to the latest version and restart your system.");
+    }
+    msg+=support;
+    return msg;
+  }
+};
+
+function showBugReport() {
+  var bugreport = document.getElementById("bugreport");
+  bugreport.style.display = "block";
+}
+
+function sendBugReport() {
+  var bugreport = document.getElementById("bugreport");
+  bugreport.submit();
+  bugreport.style.display = "none";
+  bugthanks.style.display = "block";
+  return false;
+}
+
+function main(url,txt,bug) {
+  var msg = document.getElementById("webgl-message");
+  var lang = english;
+  var b = diag.detectBrowser();
+  var p = diag.detectPlatform();
+  if (diag.isWebGLSupported()) {
+    var gl = diag.webGLContext(canvasid);
+    if (gl === null) {
+      msg.innerHTML = lang.trouble_webgl(b);
+    } else {
+      msg.innerHTML = lang.yes_webgl(url,txt,bug,b);
+    }
+  } else {
+    msg.innerHTML = lang.no_webgl(p,b);
+  }
+}
+</script>
+</head>
+<body onload="main(contentUrl,contentText,contentBug)">
+<canvas id="test-canvas" style="display: none" width="1"
+	height="1"></canvas>
+
+<div id="webgl-message"></div>
+
+</body>
+</html>
