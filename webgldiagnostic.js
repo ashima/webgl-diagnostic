@@ -1,11 +1,11 @@
 function WebGLDiagnostic() {}
 
-// string is haystack, subString is needle
+// string is haystack, subString is needle array
 // versionSearch is version label, prop is alternative property existence test
 // p is 0-indexed priority to delay very common needle searches
 WebGLDiagnostic.browsers = {
     "Chrome" :
-    { string: navigator.userAgent, subString: "Chrome",
+    { string: navigator.userAgent, subString: ["Chrome"],
       name: "Google Chrome",
       urls:
       { trouble: "http://www.google.com/support/chrome/bin/answer.py?answer=1220892",
@@ -13,11 +13,11 @@ WebGLDiagnostic.browsers = {
 	upgrade: "http://www.google.com/support/chrome/bin/answer.py?answer=95346"} },
 
     "OmniWeb" :
-    { string: navigator.userAgent, subString: "OmniWeb",
+    { string: navigator.userAgent, subString: ["OmniWeb"],
       versionSearch: "OmniWeb/", name: "OmniWeb" },
 
     "Safari" :
-    { string: navigator.vendor, subString: "Apple",
+    { string: navigator.vendor, subString: ["Apple"],
       versionSearch: "Version", name: "WebKit Developer Build",
       urls:
       { trouble: "http://www.webkit.org/blog/603/webgl-now-available-in-webkit-nightlies/",
@@ -33,30 +33,31 @@ WebGLDiagnostic.browsers = {
       }},
 
     "Android" :
-    { string: navigator.userAgent, subString: "Android",
+    { string: navigator.userAgent, subString: ["Android"],
       name: "Google Android" },
 
     "Opera" :
     { prop: window.opera, name: "Opera" },
     
     "iCab" :
-    { string: navigator.vendor, subString: "iCab", name: "iCab" },
+    { string: navigator.vendor, subString: ["iCab"], name: "iCab" },
     
     "Konqueror" :
-    { string: navigator.vendor, subString: "KDE",
+    { string: navigator.vendor, subString: ["KDE"],
       name: "Konqueror" },
     
     "Camino" :
-    { string: navigator.vendor, subString: "Camino",
+    { string: navigator.vendor, subString: ["Camino"],
       name: "Camino" },
 
     // for newer Netscapes (6+)
     "Netscape" :
-    { string: navigator.userAgent,	subString: "Netscape",
+    { string: navigator.userAgent, subString: ["Netscape","Navigator"],
+      versionSearch: "Netscape",
       name: "Netscape Navigator" },
 
     "Explorer" :
-    { string: navigator.userAgent, subString: "MSIE",
+    { string: navigator.userAgent, subString: ["MSIE"],
       versionSearch: "MSIE", name: "Microsoft Internet Explorer",
       urls:
       { trouble: "http://www.google.com/support/chrome/bin/answer.py?answer=1220892",
@@ -64,40 +65,40 @@ WebGLDiagnostic.browsers = {
 	upgrade: "http://code.google.com/chrome/chromeframe/" } },
 
     "Firefox" :
-    { p: 1, string: navigator.userAgent, subString: "Firefox",
+    { p: 1, string: navigator.userAgent, subString: ["Firefox"],
       name: "Mozilla Firefox",
       urls: { trouble: "https://support.mozilla.com/en-US/kb/how-do-i-upgrade-my-graphics-drivers",
 	      download: "http://www.mozilla.com/en-US/firefox/new/",
 	      upgrade: "http://www.mozilla.com/en-US/firefox/new/" } },
 
     "Mozilla" :
-    { p: 2, string: navigator.userAgent, subString: "Gecko",
+    { p: 2, string: navigator.userAgent, subString: ["Gecko"],
       versionSearch: "rv", name: "Mozilla Suite" },
 
     // for older Netscapes (4-)
     "OldNetscape" :
-    { p: 3, string: navigator.userAgent, subString: "Mozilla",
+    { p: 3, string: navigator.userAgent, subString: ["Mozilla"],
       versionSearch: "Mozilla", name: "Netscape Navigator" },
 
     "unknown" :
-    { p: 4, string: navigator.userAgent, subString: "",
+    { p: 4, string: navigator.userAgent, subString: [],
       name: "Unknown Browser" }
 };
 
 WebGLDiagnostic.platforms = {
-    "Windows" : { string: navigator.platform, subString: "Win",
+    "Windows" : { string: navigator.platform, subString: ["Win"],
 		  browsers: ["Chrome","Firefox"] },
-    "Mac" : { string: navigator.platform, subString: "Mac",
+    "Mac" : { string: navigator.platform, subString: ["Mac"],
 	      browsers: ["Chrome","Firefox","Safari"] },
-    "iPhone/iPod" : { string: navigator.userAgent, subString: "iPhone",
+    "iPhone/iPod" : { string: navigator.userAgent, subString: ["iPhone"],
 		      browsers: ["Firefox"] },
-    "iPad" : { string: navigator.platform, subString: "iPad",
+    "iPad" : { string: navigator.platform, subString: ["iPad"],
 	       browsers: ["Firefox"] },
-    "Android" : { string: navigator.userAgent, subString: "Android",
+    "Android" : { string: navigator.userAgent, subString: ["Android"],
 		  browsers: ["Firefox"] },
-    "Linux" : { string: navigator.platform, subString: "Linux",
+    "Linux" : { string: navigator.platform, subString: ["Linux"],
 		browsers: ["Firefox","Chrome"] },
-    "unknown" : { string: navigator.platform, subString: "~~~",
+    "unknown" : { string: navigator.platform, subString: [],
 		  browsers: ["Firefox","Chrome","Safari"] }
 };
 
@@ -147,8 +148,13 @@ WebGLDiagnostic.detectBrowser = function() {
 	    bv = bd[bn];
 	    if (typeof(bv.p) == "undefined") { bv.p = 0; }
 	    if (p >= bv.p) {
-		if ((bv.string && bv.string.indexOf(bv.subString) != -1)
-		    || bv.prop) {
+		if (bv.string) {
+		    for (var i = 0; i < bv.subString.length; i++) {
+			if (bv.string.indexOf(bv.subString[i]) != -1) {
+			    return diag.browserWithIdVersion(bn,bv);
+			}
+		    }
+		} else if (bv.prop) {
 		    return diag.browserWithIdVersion(bn,bv);
 		}
 	    } else { delay[bn] = bv; }
@@ -167,8 +173,12 @@ WebGLDiagnostic.detectPlatform = function() {
 	var pn, pv;
 	for (pn in pd) {
 	    pv = pd[pn];
-	    if (pv.string && pv.string.indexOf(pv.subString) != -1) {
-		return diag.platformWithIdBrowsers(pn,pv);
+	    if (pv.string) {
+		for (var i=0; i < pv.subString.length; i++) {
+		    if (pv.string.indexOf(pv.subString[i]) != -1) {
+			return diag.platformWithIdBrowsers(pn,pv);
+		    }
+		}
 	    }
 	}
 	return null;
