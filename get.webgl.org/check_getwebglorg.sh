@@ -21,9 +21,9 @@ then
 fi
 
 # get the files if they've been updated
-curl http://get.webgl.org/ -o get.webgl.org.html -z get.webgl.org.html
-curl http://get.webgl.org/troubleshooting/ -o troubleshooting.html -z troubleshooting.html
-curl http://get.webgl.org/troubleshooting/DoNotCopyOrLinkThisFileElseYouWillNotGetAutoUpdatedHelpForYourUsers.js -o detect.js -z detect.js
+curl -v http://get.webgl.org/ -o get.webgl.org.html -z get.webgl.org.html
+curl -v http://get.webgl.org/troubleshooting/ -o troubleshooting.html -z troubleshooting.html
+curl -v http://get.webgl.org/troubleshooting/DoNotCopyOrLinkThisFileElseYouWillNotGetAutoUpdatedHelpForYourUsers.js -o detect.js -z detect.js
 
 # diff against last sync
 diff get.webgl.org.html get.webgl.org.html.sync > get.webgl.org.html.diff
