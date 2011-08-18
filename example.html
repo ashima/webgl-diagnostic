@@ -6,6 +6,7 @@
 #bugreport { display: none }
 #bugthanks { display: none }
 </style>
+<script type="text/javascript" src="DAT.GUI.min.js"></script>
 <script type="text/javascript" src="webgldiagnostic.js"></script>
 <script type="text/javascript">
 var canvasid = "test-canvas";
@@ -87,19 +88,28 @@ function sendBugReport() {
   return false;
 }
 
+var debug = { trouble: false };
+
 function main() {
-  var msg = document.getElementById("webgl-message");
+  var datgui = new DAT.GUI();
+  datgui.add(debug, 'trouble').name("Trouble").onChange(function(v) {
+    reset_webgl(); detect();
+  });
+  detect();
+}
+ 
+function detect() { 
   var b = diag.detectBrowser();
   var p = diag.detectPlatform();
   if (diag.isWebGLSupported()) {
     var gl = diag.webGLContext(canvasid);
-    if (gl === null) {
-      msg.innerHTML = lang.trouble_webgl(b);
+    if (debug.trouble || gl === null) {
+      trouble_webgl(b);
     } else {
-      msg.innerHTML = lang.yes_webgl(b);
+      yes_webgl(b);
     }
   } else {
-    msg.innerHTML = lang.no_webgl(p,b);
+    no_webgl(p,b);
   }
 }
 </script>
