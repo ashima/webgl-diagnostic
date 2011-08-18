@@ -1,113 +1,20 @@
-function WebGLDiagnostic() {}
+if (!WebGLDiagnostic) { WebGLDiagnostic = {}; }
 
-// string is haystack, subString is needle array
-// versionSearch is version label, prop is alternative property existence test
-// p is 0-indexed priority to delay very common needle searches
-WebGLDiagnostic.browsers = {
-    "Chrome" :
-    { string: navigator.userAgent, subString: ["Chrome"],
-      name: "Google Chrome",
-      urls:
-      { trouble: "http://www.google.com/support/chrome/bin/answer.py?answer=1220892",
-	download: "http://www.google.com/chrome/",
-	upgrade: "http://www.google.com/support/chrome/bin/answer.py?answer=95346"} },
-
-    "OmniWeb" :
-    { string: navigator.userAgent, subString: ["OmniWeb"],
-      versionSearch: "OmniWeb/", name: "OmniWeb" },
-
-    "Safari" :
-    { string: navigator.vendor, subString: ["Apple"],
-      versionSearch: "Version", name: "WebKit Developer Build",
-      urls:
-      { trouble: "http://www.webkit.org/blog/603/webgl-now-available-in-webkit-nightlies/",
-	download: "http://www.webkit.org/",
-	upgrade: "http://www.webkit.org/" },
-      platforms:
-      { "iPhone/iPod": { trouble: "http://www.apple.com/support/iphone/",
-			 upgrade: "http://www.apple.com/ios/"},
-	"iPad": { trouble: "http://www.apple.com/support/ipad/",
-		  upgrade: "http://www.apple.com/ios/"},
-	"Mac": { trouble: "http://www.webkit.org/blog/603/webgl-now-available-in-webkit-nightlies/",
-		 upgrade: "http://www.webkit.org/"}
-      }},
-
-    "Android" :
-    { string: navigator.userAgent, subString: ["Android"],
-      name: "Google Android" },
-
-    "Opera" :
-    { prop: window.opera, name: "Opera" },
-    
-    "iCab" :
-    { string: navigator.vendor, subString: ["iCab"], name: "iCab" },
-    
-    "Konqueror" :
-    { string: navigator.vendor, subString: ["KDE"],
-      name: "Konqueror" },
-    
-    "Camino" :
-    { string: navigator.vendor, subString: ["Camino"],
-      name: "Camino" },
-
-    // for newer Netscapes (6+)
-    "Netscape" :
-    { string: navigator.userAgent, subString: ["Netscape","Navigator"],
-      versionSearch: "Netscape",
-      name: "Netscape Navigator" },
-
-    "Explorer" :
-    { string: navigator.userAgent, subString: ["MSIE"],
-      versionSearch: "MSIE", name: "Microsoft Internet Explorer",
-      urls:
-      { trouble: "http://www.google.com/support/chrome/bin/answer.py?answer=1220892",
-	download: "http://code.google.com/chrome/chromeframe/",
-	upgrade: "http://code.google.com/chrome/chromeframe/" } },
-
-    "Firefox" :
-    { p: 1, string: navigator.userAgent, subString: ["Firefox"],
-      name: "Mozilla Firefox",
-      urls: { trouble: "https://support.mozilla.com/en-US/kb/how-do-i-upgrade-my-graphics-drivers",
-	      download: "http://www.mozilla.com/en-US/firefox/new/",
-	      upgrade: "http://www.mozilla.com/en-US/firefox/new/" } },
-
-    "Mozilla" :
-    { p: 2, string: navigator.userAgent, subString: ["Gecko"],
-      versionSearch: "rv", name: "Mozilla Suite" },
-
-    // for older Netscapes (4-)
-    "OldNetscape" :
-    { p: 3, string: navigator.userAgent, subString: ["Mozilla"],
-      versionSearch: "Mozilla", name: "Netscape Navigator" },
-
-    "unknown" :
-    { p: 4, string: navigator.userAgent, subString: [],
-      name: "Unknown Browser" }
+WebGLDiagnostic.caps = {
+    "renderbuffer_depth":function(gl) {
+	var rbdepth, db = gl.createRenderbuffer();
+	gl.bindRenderbuffer(gl.RENDERBUFFER,db);
+	gl.renderbufferStorage(gl.RENDERBUFFER,
+			       gl.DEPTH_COMPONENT16,
+			       1,1);
+	rbdepth = gl.getRenderbufferParameter(gl.RENDERBUFFER,
+					      gl.RENDERBUFFER_DEPTH_SIZE);
+	gl.deleteRenderbuffer(db);
+	return rbdepth;
+    }
 };
 
-WebGLDiagnostic.platforms = {
-    "Windows" : { string: navigator.platform, subString: ["Win"],
-		  browsers: ["Chrome","Firefox"] },
-    "Mac" : { string: navigator.platform, subString: ["Mac"],
-	      browsers: ["Chrome","Firefox","Safari"] },
-    "iPhone/iPod" : { string: navigator.userAgent, subString: ["iPhone"],
-		      browsers: ["Firefox"] },
-    "iPad" : { string: navigator.platform, subString: ["iPad"],
-	       browsers: ["Firefox"] },
-    "Android" : { string: navigator.userAgent, subString: ["Android"],
-		  browsers: ["Firefox"] },
-    "Linux" : { string: navigator.platform, subString: ["Linux"],
-		browsers: ["Firefox","Chrome"] },
-    "unknown" : { string: navigator.platform, subString: [],
-		  browsers: ["Firefox","Chrome","Safari"] }
-};
-
-WebGLDiagnostic.browserHasWebGLVersion = function(browser) {
-    if (browser.urls) { return true; }
-    else { return false; }
-};
-
-WebGLDiagnostic.browserWithIdVersion = function(id,browser) {
+WebGLDiagnostic._browserWithIdVersion = function(id,browser) {
     browser.id = id;
     var i, idx, vstart,
         vs = browser.versionSearch || id,
@@ -124,7 +31,7 @@ WebGLDiagnostic.browserWithIdVersion = function(id,browser) {
     return browser;
 };
 
-WebGLDiagnostic.platformWithIdBrowsers = function(id,platform) {
+WebGLDiagnostic._platformWithIdBrowsers = function(id,platform) {
     var i;
     platform.id = id;
     for (i = 0; i < platform.browsers.length; i++) {
@@ -134,7 +41,7 @@ WebGLDiagnostic.platformWithIdBrowsers = function(id,platform) {
     return platform;
 };
 
-WebGLDiagnostic.tableSize = function(table) {
+WebGLDiagnostic._tableSize = function(table) {
     var k, count = 0;
     for (k in table) { if (table.hasOwnProperty(k)) { count++; } }
     return count;
@@ -151,20 +58,20 @@ WebGLDiagnostic.detectBrowser = function() {
 		if (bv.string) {
 		    for (var i = 0; i < bv.subString.length; i++) {
 			if (bv.string.indexOf(bv.subString[i]) != -1) {
-			    return diag.browserWithIdVersion(bn,bv);
+			    return diag._browserWithIdVersion(bn,bv);
 			}
 		    }
 		} else if (bv.prop) {
-		    return diag.browserWithIdVersion(bn,bv);
+		    return diag._browserWithIdVersion(bn,bv);
 		}
 	    } else { delay[bn] = bv; }
 	}
-	if (diag.tableSize(delay) > 0) { return check(p+1,delay); }
+	if (diag._tableSize(delay) > 0) { return check(p+1,delay); }
 	else { return null; }
     }
     cr = check(0,this.browsers);
     if (cr) { return cr; }
-    else { return this.browserWithIdVersion("unknown",this.browsers["unknown"]); }
+    else { return null; }
 };
 
 WebGLDiagnostic.detectPlatform = function() {
@@ -176,7 +83,7 @@ WebGLDiagnostic.detectPlatform = function() {
 	    if (pv.string) {
 		for (var i=0; i < pv.subString.length; i++) {
 		    if (pv.string.indexOf(pv.subString[i]) != -1) {
-			return diag.platformWithIdBrowsers(pn,pv);
+			return diag._platformWithIdBrowsers(pn,pv);
 		    }
 		}
 	    }
@@ -185,33 +92,30 @@ WebGLDiagnostic.detectPlatform = function() {
     }
     cr = check(this.platforms);
     if (cr) { return cr; }
-    else { return this.platformWithIdBrowsers("unknown",this.platforms["unknown"]); }
+    else {
+      return this._platformWithIdBrowsers("unknown",this.platforms["unknown"]);
+    }
 };
 
-WebGLDiagnostic.context_ids = [
-"webgl","experimental-webgl","moz-webgl","webkit-3d" ];
+WebGLDiagnostic.detectDriver = function(canvasid) {
+  var gl = this.webGLContext(canvasid), renderer, v;
+  if (!gl) { return null; }
+  renderer = gl.getParameter(gl.RENDERER);
 
-WebGLDiagnostic.exts = [
-"OES_texture_float","OES_texture_half_float","WEBKIT_lose_context",
-"OES_standard_derivatives","OES_vertex_array_object" ];
-
-WebGLDiagnostic.drivers = {
-    "nvidia":"http://www.nvidia.com/Download/index.aspx",
-    "ati":"http://support.amd.com/us/gpudownload/Pages/index.aspx",
-    "osx":"http://www.apple.com/macosx/"};
-
-WebGLDiagnostic.caps = {
-    "renderbuffer_depth":function(gl) {
-	var rbdepth, db = gl.createRenderbuffer();
-	gl.bindRenderbuffer(gl.RENDERBUFFER,db);
-	gl.renderbufferStorage(gl.RENDERBUFFER,
-			       gl.DEPTH_COMPONENT16,
-			       1,1);
-	rbdepth = gl.getRenderbufferParameter(gl.RENDERBUFFER,
-					      gl.RENDERBUFFER_DEPTH_SIZE);
-	gl.deleteRenderbuffer(db);
-	return rbdepth;
+  if (navigator.userAgent.match(/Mac OS X/)) {
+    if (navigator.userAgent.match(/Mac OS X 10[\s\S](6|7)/)) {
+      return null;
+    } else {
+      return this.drivers["osx"];
     }
+  }
+
+  for (v in this.drivers) {
+    if ((new RegExp(v, "i")).test(renderer)) {
+      return this.drivers[v].url;
+    }
+  }
+  return null;
 };
 
 WebGLDiagnostic.isWebGLSupported = function() {
@@ -229,32 +133,11 @@ WebGLDiagnostic.webGLContext = function(canvasid) {
   return gl;
 };
 
-WebGLDiagnostic.driverLink = function(canvasid) {
-    var gl = this.webGLContext(canvasid), renderer, v;
-  if (!gl) { return null; }
-  renderer = gl.getParameter(gl.RENDERER);
-
-  if (navigator.userAgent.match(/Mac OS X/)) {
-    if (navigator.userAgent.match(/Mac OS X 10[\s\S]6/)) {
-      return null;
-    } else {
-      return this.drivers["osx"];
-    }
-  }
-
-  for (v in this.drivers) {
-    if ((new RegExp(v, "i")).test(renderer)) {
-      return this.drivers[v];      
-    }
-  }
-  return null;
-};
-
 WebGLDiagnostic.report = function(canvasid) {
     var info = "", gl, webglFunctional, params, vpdims, i, cap;
 
     info += "WebGL Support: ";
-    
+
     function getExt(gl,ext) {
 	if (gl.getExtension) {
             return (gl.getExtension(ext) != null);
@@ -265,11 +148,11 @@ WebGLDiagnostic.report = function(canvasid) {
 
     if (this.isWebGLSupported()) {
 	info += "yes";
-	
+
 	gl = this.webGLContext(canvasid);
-	
+
 	webglFunctional = gl != null;
-	
+
 	if (webglFunctional) {
 	    params = [
 		["Version", gl.VERSION],
@@ -296,19 +179,19 @@ WebGLDiagnostic.report = function(canvasid) {
 	    ];
 
 	    info += " ("+this.context_id+")\n";
-	    
+
 	    for (i=0; i < params.length; i++) {
 		info += params[i][0]+": "+gl.getParameter(params[i][1])+"\n";
 	    }
-	    
+
 	    vpdims = gl.getParameter(gl.MAX_VIEWPORT_DIMS);
 	    if (vpdims != null) { vpdims = vpdims[0]+" x "+vpdims[1]; }
 	    info += "Max Viewport Dims: "+vpdims+"\n";
-	    
+
 	    for (cap in this.caps) {
 		info += cap+": "+this.caps[cap](gl)+"\n";
 	    }
-	    
+
 	    info += "\n";
 
 	    for (i=0; i < this.exts.length; i++) {
@@ -329,6 +212,6 @@ WebGLDiagnostic.report = function(canvasid) {
     info += "Screen resolution: "+screen.width+" x "+screen.height+"\n";
     info += "Color depth: "+screen.colorDepth+"\n";
     info += "Pixel depth: "+screen.pixelDepth+"\n";
-    
+
     return info;
 };

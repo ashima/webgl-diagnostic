@@ -1,16 +1,14 @@
 <html>
 <head>
 <style>
-#webgl-message { position: absolute; width: 50%; top: 20% }
+.webgl-diag { display: none }
+.webgl-message { position: absolute; width: 50%; top: 20% }
 #bugreport { display: none }
 #bugthanks { display: none }
 </style>
 <script type="text/javascript" src="webgldiagnostic.js"></script>
 <script type="text/javascript">
 var canvasid = "test-canvas";
-var contentUrl = "http://ashimagames.com/ooman/tutorial.html";
-var contentText = "Enjoy Ooman Tutorial Level";
-var contentBug = "http://ashimagames.com/FormToEmail.php";
 
 var diag = WebGLDiagnostic;
 var report;
@@ -30,7 +28,7 @@ var english = {
       }
       return (ident+"Unfortunately, there are no newer versions of your "
               +"browser with WebGL support; however, the following browsers "
-              +"with WebGL support may be available for your system:"
+              +"with WebGL support may be available for "+p.id+":"
               +"<ul>"+browserlist.join("")+"</ul>");
     }
   },
@@ -55,19 +53,20 @@ var english = {
 	       +"unavailable. ");
     var support;
 
-    if (b.id == "unknown") {
+    if (b == null) {
       support = "Visit your browser's support site for more information.";
     } else {
       support = ("<a href='"+b.urls.trouble+"'>Visit "+b.name+"'s support site</a> "
 		 +"for more information.");
     }
 
-    var driver = diag.driverLink(canvasid);
+    var driver = diag.detectDriver(canvasid);
     if (driver === null) {
       msg+=("A common cause of WebGL unavailability is out-of-date "
             +"graphics drivers. ");
     } else {
-      msg+=("It may help to <a href='"+driver+"'>upgrade your graphics drivers</a> "
+      msg+=("It may help to <a href='"+driver.v+"'>upgrade your "
+	    +driver.label+" graphics drivers</a> "
 	    +"to the latest version and restart your system.");
     }
     msg+=support;
@@ -88,9 +87,8 @@ function sendBugReport() {
   return false;
 }
 
-function main(url,txt,bug) {
+function main() {
   var msg = document.getElementById("webgl-message");
-  var lang = english;
   var b = diag.detectBrowser();
   var p = diag.detectPlatform();
   if (diag.isWebGLSupported()) {
@@ -98,7 +96,7 @@ function main(url,txt,bug) {
     if (gl === null) {
       msg.innerHTML = lang.trouble_webgl(b);
     } else {
-      msg.innerHTML = lang.yes_webgl(url,txt,bug,b);
+      msg.innerHTML = lang.yes_webgl(b);
     }
   } else {
     msg.innerHTML = lang.no_webgl(p,b);
@@ -106,11 +104,24 @@ function main(url,txt,bug) {
 }
 </script>
 </head>
-<body onload="main(contentUrl,contentText,contentBug)">
+<body onload="main()">
 <canvas id="test-canvas" style="display: none" width="1"
 	height="1"></canvas>
 
-<div id="webgl-message"></div>
+<div class="webgl-diag">
+  <div class="webgl-diag webgl-message" id="upgrade-webgl" lang="en">
+  </div>
+  <div class="webgl-diag webgl-message" id="change-webgl" lang="en">
+  </div>
+  <div class="webgl-diag webgl-message" id="trouble-webgl" lang="en">
+  </div>
+  <div class="webgl-diag webgl-message" id="yes-webgl" lang="en">
+  </div>
+</div>
+
+<noscript>
+<div class="webgl-message">Javascript is required to use WebGL content.</div>
+</noscript>
 
 </body>
 </html>
