@@ -7,14 +7,14 @@ system information to you in a bug report.
 webgl-diagnostic features:
 
 * Up-to-date and accurate browser and platform detection (cf. get.webgl.org)
+* Easy system profile report generation for high quality user bug reports
 * A user support database in JSON with support for experimental implementations and plugins
-* Google Chrome Frame recommendation for IE users
+* Plugin recommendations (e.g. Google Chrome Frame for IE users)
 * WebGL extension detection
 * Graphics driver detection and driver support links
 * Easily skinnable support messages
 * Easily localizable support messages
 * WebGL capability sniffing
-* Easy system profile report generation
 * Your contributions
 
 Data updates? Bugs? Browser compatibility issues? Translations? We would
