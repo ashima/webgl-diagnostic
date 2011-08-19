@@ -1,11 +1,9 @@
 <html>
 <head>
 <style>
-.webgl-diag { display: none }
-.webgl-message { position: absolute; width: 50%; top: 20% }
-#bugreport { display: none }
-#bugthanks { display: none }
+.webgl-message { display: none; }
 </style>
+<!-- DAT.GUI for debugging only -->
 <script type="text/javascript" src="DAT.GUI.min.js"></script>
 <script type="text/javascript" src="webgldiagdata.js"></script>
 <script type="text/javascript" src="webgldiagnostic.js"></script>
@@ -15,21 +13,86 @@
 <canvas id="test-canvas" style="display: none" width="1"
 	height="1"></canvas>
 
-<div class="webgl-diag">
-  <div class="webgl-diag webgl-message" id="upgrade-webgl" lang="en">
+<div>
+  <div class="webgl-message" id="change-webgl">
+    <p lang="en">
+      It looks like you are
+      using <span id="change-webgl-browser"></span> which does not
+      support WebGL.
+    </p>
+    <p lang="en">
+      Unfortunately, there are no newer versions of your browser with
+      WebGL support; however, the following browsers with WebGL support
+      may be available for <span id="change-webgl-platform"></span>:
+      <ul id="change-webgl-browserlist"></ul>
+    </p>
   </div>
-  <div class="webgl-diag webgl-message" id="plugin-webgl" lang="en">
+  <div class="webgl-message" id="upgrade-webgl">
+    <p lang="en">
+      It looks like you are
+      using <span id="upgrade-webgl-browser"></span> which does not
+      support WebGL.
+    </p>
+    <p lang="en">
+      Please <span id="upgrade-webgl-link"></span> your browser to view
+      WebGL content.
+    </p>
   </div>
-  <div class="webgl-diag webgl-message" id="change-webgl" lang="en">
+  <div class="webgl-message" id="plugin-webgl">
+    <p lang="en">
+      It looks like you are
+      using <span id="plugin-webgl-browser"></span> which does not
+      support WebGL.
+    </p>
+    <p lang="en">
+      The following WebGL browser plugins are available:
+      <ul id="plugin-webgl-pluginlist"></ul>
+    </p>
+    <p lang="en">
+      Remember to restart your browser after installing a plugin.
+    </p>
   </div>
-  <div class="webgl-diag webgl-message" id="trouble-webgl" lang="en">
+  <div class="webgl-message" id="experimental-plugin-webgl">
+    <p lang="en"></p>
   </div>
-  <div class="webgl-diag webgl-message" id="yes-webgl" lang="en">
+  <div class="webgl-message" id="experimental-change-webgl">
+    <p lang="en"></p>
+  </div>
+  <div class="webgl-message" id="trouble-webgl">
+    <p lang="en">
+      Your browser is WebGL-capable but support is disabled or
+      unavailable.
+    </p>
+    <p lang="en" id="trouble-webgl-nodriver" style="display: none">
+      A common cause of WebGL unavailability is out-of-date graphics
+      drivers. Please ensure your graphics drivers are up-to-date.
+    </p>
+    <p lang="en" id="trouble-webgl-driver" style="display: none">
+      It may help to <span id="trouble-webgl-driver-link"></span> to the
+      latest version and restart your system.
+    </p>
+    <p lang="en" id="trouble-webgl-anon" style="display: none">
+      Visit your browser's support site for more information.
+    </p>
+    <p lang="en" id="trouble-webgl-known" style="display: none">
+      <span id="trouble-webgl-support"></span> for more information.
+    </p>
+  </div>
+  <div class="webgl-message" id="ok-webgl">
+    <p lang="en" class="webgl-message" id="ok-webgl-experimental">
+      Your browser indicates that its WebGL support is experimental. You
+      may experience problems with some content.
+    </p>
+    <p lang="en">
+      <a href="http://ashimagames.com/ooman/tutorial.html">Play Ooman</a>
+    </p>
   </div>
 </div>
 
 <noscript>
-<div class="webgl-message">Javascript is required to use WebGL content.</div>
+  <div class="webgl-message" style="display: block">
+    Javascript is required to experience WebGL content. Please enable Javascript.
+  </div>
 </noscript>
 
 </body>

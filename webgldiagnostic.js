@@ -31,13 +31,8 @@ WebGLDiagnostic._browserWithIdVersion = function(id,browser) {
     return browser;
 };
 
-WebGLDiagnostic._platformWithIdBrowsers = function(id,platform) {
-    var i;
+WebGLDiagnostic._platformWithId = function(id,platform) {
     platform.id = id;
-    for (i = 0; i < platform.browsers.length; i++) {
-	platform.browsers[i] = this.browsers[platform.browsers[i]];
-	platform.browsers[i].id = i;
-    }
     return platform;
 };
 
@@ -83,7 +78,7 @@ WebGLDiagnostic.detectPlatform = function() {
 	    if (pv.string) {
 		for (var i=0; i < pv.subString.length; i++) {
 		    if (pv.string.indexOf(pv.subString[i]) != -1) {
-			return diag._platformWithIdBrowsers(pn,pv);
+			return diag._platformWithId(pn,pv);
 		    }
 		}
 	    }
@@ -93,7 +88,7 @@ WebGLDiagnostic.detectPlatform = function() {
     cr = check(this.platforms);
     if (cr) { return cr; }
     else {
-      return this._platformWithIdBrowsers("unknown",this.platforms["unknown"]);
+      return this._platformWithId("unknown",this.platforms["unknown"]);
     }
 };
 
@@ -103,11 +98,7 @@ WebGLDiagnostic.detectDriver = function(canvasid) {
   renderer = gl.getParameter(gl.RENDERER);
 
   if (navigator.userAgent.match(/Mac OS X/)) {
-    if (navigator.userAgent.match(/Mac OS X 10[\s\S](6|7)/)) {
-      return null;
-    } else {
-      return this.drivers["osx"];
-    }
+    return this.drivers["osx"];
   }
 
   for (v in this.drivers) {
@@ -282,7 +273,7 @@ WebGLDiagnostic.diagnose = function (out) {
     var b = diag.detectBrowser();
     var p = diag.detectPlatform();
     var d = diag.decisions[b.id];
-    if (diag.isWebGLSupported()) {
+    if (!(out.debug && !out.debug.supported) && diag.isWebGLSupported()) {
       var gl = diag.webGLContext(out.canvasid);
       if ((out.debug && out.debug.trouble) || gl === null) {
 	if (d.platforms && d.platforms[p.id] && d.platforms[p.id].trouble) {
@@ -302,18 +293,21 @@ WebGLDiagnostic.diagnose = function (out) {
 	    out.upgrade(b,d.upgrade);
 	  } else { // get a better browser
 	    experimental_change(p,b,d);
-	    out.change(p);
+	    out.change(p,b);
 	  }
 	}
       } else { // we know nothing, get a better browser
-	out.change(p);
+	out.change(p,b);
       }
     }
   }
 
   if (DAT.GUI) {
     var datgui = new DAT.GUI();
-    datgui.add(debug, 'trouble').name("Trouble").onChange(function(v) {
+    datgui.add(out.debug, 'trouble').name("Trouble").onChange(function(v) {
+      out.reset(); detect();
+    });
+    datgui.add(out.debug, 'supported').name("Supported").onChange(function (v) {
       out.reset(); detect();
     });
   }

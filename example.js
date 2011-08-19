@@ -1,95 +1,91 @@
-/*function showBugReport() {
-  var bugreport = document.getElementById("bugreport");
-  bugreport.style.display = "block";
-}
+function $$(i) { return document.getElementById(i); }
 
-function sendBugReport() {
-  var bugreport = document.getElementById("bugreport");
-  bugreport.submit();
-  bugreport.style.display = "none";
-  bugthanks.style.display = "block";
-  return false;
-}
-
-function yes_webgl(b) {
-    var trouble = ("Trouble viewing the content? "
-		   +"<a href='#' onclick='showBugReport()'>Report a problem</a>.");
-    var bugreport = "<form method='POST' action='"+bug+"' id='bugreport'>";
-    bugreport += "<table>";
-    bugreport += "<tr><td>Email</td><td><input type='text' name='email'></td></tr>";
-    bugreport += "<tr><td>Description</td><td>"
-    bugreport += "<textarea name='comments' rows='2' cols='40'></textarea></td></tr>";
-    bugreport += "<tr><td></td><td>";
-    bugreport += "<input type='hidden' name='diagnostics' value='"+report+"'>"
-    bugreport += "<input type='submit' value='Send' onsubmit='sendBugReport()'>";
-    bugreport += "</td></tr>";
-    bugreport += "</table></form>";
-    bugreport += "<div id='bugthanks'>Thanks for your report!</div>";
-    return ("<a href='"+url+"'>"+txt+"</a><br>"+trouble+bugreport);
-}
-*/
-var out = { canvasid: "test-canvas", // string
-            debug: { trouble: false }, // { trouble: bool } option
-	    // unit -> unit
-            reset: function () { },
-	    // platform -> unit
-            change: function(p) { },
-	    // browser -> url -> unit
-            upgrade: function(b,url) { },
-	    // browser -> url label -> unit
-            plugin: function (b,link) { },
-	    // browser -> url label -> unit
-            experimental_plugin: function (b,link) { },
-	    // browser -> url label -> unit
-            experimental_change: function (b,link) { },
-	    // browser -> url -> url label option -> unit
-	    trouble: function(b,url,driver) { },
-	    // unit -> unit
-	    ok: function() { }
-          };
-/*
-function trouble_webgl(b) {
-    var msg = ("Your browser appears to support WebGL but it is disabled or "
-	       +"unavailable. ");
-    var support;
-
-    if (b == null) {
-      support = "Visit your browser's support site for more information.";
-    } else {
-      support = ("<a href='"+b.urls.trouble+"'>Visit "+b.name+"'s support site</a> "
-		 +"for more information.");
-    }
-
-    var driver = diag.detectDriver(canvasid);
-    if (driver === null) {
-      msg+=("A common cause of WebGL unavailability is out-of-date "
-            +"graphics drivers. ");
-    } else {
-      msg+=("It may help to <a href='"+driver.v+"'>upgrade your "
-	    +driver.label+" graphics drivers</a> "
-	    +"to the latest version and restart your system.");
-    }
-    msg+=support;
-    return msg;
-}
-
-function no_webgl(p,b) {
-    var i, browserlist = [], link;
-    var ident = ("It looks like you are using "+b.name+" "+b.version
-                 +" which does not support WebGL. ")
-    if (b.urls && b.urls.upgrade) { // upgrade
-      return (ident+"Please <a href='"+b.urls.upgrade
-              +"'>upgrade</a> your browser to view WebGL content.");
-    } else { // change browser
-      for (i = 0; i < p.browsers.length; i++) {
-        link = ("<a href='"+p.browsers[i].urls.download+"'>"
-	        +p.browsers[i].name+"</a>");
-        browserlist[browserlist.length] = "<li>"+link+"</li>";
+var out = {
+  canvasid: "test-canvas", // string
+  debug: { trouble: false,
+	   supported: true }, // { trouble: bool; supported: bool } option
+  // unit -> unit
+  reset: function () {
+    $$("change-webgl").style.display = "none";
+    $$("upgrade-webgl").style.display = "none";
+    $$("plugin-webgl").style.display = "none";
+    $$("plugin-webgl-pluginlist").innerHTML = "";
+    $$("experimental-plugin-webgl").style.display = "none";
+    $$("experimental-change-webgl").style.display = "none";
+    $$("trouble-webgl").style.display = "none";
+    $$("trouble-webgl-anon").style.display = "none";
+    $$("trouble-webgl-known").style.display = "none";
+    $$("trouble-webgl-nodriver").style.display = "none";
+    $$("trouble-webgl-driver").style.display = "none";
+    $$("ok-webgl").style.display = "none";
+    $$("ok-webgl-experimental").style.display = "none";
+  },
+  // platform -> browser -> unit
+  change: function(p, b) {
+    var bl = [];
+    for (var i = 0; i < p.browsers.length; i++) {
+      var d = WebGLDiagnostic.decisions[p.browsers[i]];
+      var name = WebGLDiagnostic.browsers[p.browsers[i]];
+      var url;
+      if (d.platforms && d.platforms[p.id] && d.platforms[p.id].download) {
+	url = d.platforms[p.id].download;
+      } else {
+	url = d.download;
       }
-      return (ident+"Unfortunately, there are no newer versions of your "
-              +"browser with WebGL support; however, the following browsers "
-              +"with WebGL support may be available for "+p.id+":"
-              +"<ul>"+browserlist.join("")+"</ul>");
+      bl[bl.length] = "<li><a href='"+url+"'>"+name+"</a></li>";
     }
-}
-*/
+    // TODO: can't use id for multilingual messages
+    $$("change-webgl-browser").innerHTML = b.name+" "+b.version;
+    $$("change-webgl-platform").innerHTML = p.id;
+    $$("change-webgl-browserlist").innerHTML = bl.join("");
+    $$("change-webgl").style.display = "block";
+  },
+  // browser -> url -> unit
+  upgrade: function(b,url) {
+    // TODO: can't use id for multilingual messages
+    $$("upgrade-webgl-browser").innerHTML = b.name+" "+b.version;
+    $$("upgrade-webgl-link").innerHTML = "<a href='"+url+"'>upgrade</a>";
+    $$("upgrade-webgl").style.display = "block";
+  },
+  // browser -> url label -> unit
+  plugin: function (b,link) {
+    // TODO: can't use id for multilingual messages
+    $$("plugin-webgl-browser").innerHTML = b.name+" "+b.version;
+    $$("plugin-webgl-pluginlist").innerHTML =
+      $$("plugin-webgl-pluginlist").innerHTML
+      +"<a href='"+link.v.download+"'>"+link.label+"</a>";
+    $$("plugin-webgl").style.display = "block";
+  },
+  // browser -> url label -> unit
+  experimental_plugin: function (b,link) { }, // TODO
+  // browser -> url label -> unit
+  experimental_change: function (b,link) { }, // TODO
+  // browser -> url -> url label option -> unit
+  trouble: function(b,url,driver) {
+    if (b == null) {
+      $$("trouble-webgl-anon").style.display = "block";
+    } else {
+      $$("trouble-webgl-support").innerHTML =
+	"<a href='"+url+"'>Visit "+b.name+"'s support site</a>";
+      $$("trouble-webgl-known").style.display = "block";
+    }
+
+    if (driver == null) {
+      $$("trouble-webgl-nodriver").style.display = "block";
+    } else {
+      $$("trouble-webgl-driver-link").innerHTML =
+	"<a href='"+driver.v+"'>update your "
+	+driver.label+" graphics drivers</a>";
+      $$("trouble-webgl-driver").style.display = "block";
+    }
+    $$("trouble-webgl").style.display = "block";
+  },
+  // unit -> unit
+  ok: function() {
+    if (WebGLDiagnostic.context_id != "webgl") {
+      // TODO: can't use id for multilingual messages
+      $$("ok-webgl-experimental").style.display = "block";
+    }
+    $$("ok-webgl").style.display = "block";
+  }
+};

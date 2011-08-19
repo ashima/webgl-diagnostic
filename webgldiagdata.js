@@ -34,7 +34,7 @@ WebGLDiagnostic.decisions = {
   },
 
   "Safari" :
-  { trouble: "", // TODO
+  { trouble: "http://fairerplatform.com/2011/05/new-in-os-x-lion-safari-5-1-brings-webgl-do-not-track-and-more/",
     download: "http://www.apple.com/safari/",
     upgrade: "http://www.apple.com/safari/",
     platforms:
@@ -45,7 +45,7 @@ WebGLDiagnostic.decisions = {
       { trouble: "http://www.apple.com/support/ipad/",
 	upgrade: "http://www.apple.com/ios/"},
       "Mac":
-      { trouble: "", // TODO
+      { trouble: "http://fairerplatform.com/2011/05/new-in-os-x-lion-safari-5-1-brings-webgl-do-not-track-and-more/",
 	upgrade: "http://www.apple.com/safari/"}
     }
   },
@@ -54,9 +54,9 @@ WebGLDiagnostic.decisions = {
   { platforms:
     { "Windows":
       { experimental:
-	{ label: "Opera Developer Preview", // TODO: verify
-	  v: { trouble: "", // TODO
-	       download: ""} // TODO
+	{ label: "Opera Developer Preview",
+	  v: { trouble: "http://my.opera.com/core/blog/2011/02/28/webgl-and-hardware-acceleration-2",
+	       download: "http://my.opera.com/core/blog/2011/02/28/webgl-and-hardware-acceleration-2"}
 	}
       }
     }
