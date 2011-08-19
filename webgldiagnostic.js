@@ -1,4 +1,4 @@
-if (!WebGLDiagnostic) { WebGLDiagnostic = {}; }
+if (typeof(WebGLDiagnostic)=="undefined") { WebGLDiagnostic = {}; }
 
 WebGLDiagnostic.caps = {
     "renderbuffer_depth":function(gl) {
@@ -214,4 +214,109 @@ WebGLDiagnostic.report = function(canvasid) {
     info += "Pixel depth: "+screen.pixelDepth+"\n";
 
     return info;
+};
+
+WebGLDiagnostic.diagnose = function (out) {
+  var diag = this;
+
+  function experimental_change(p,b,d) {
+    var n = [d];
+    if ((n[1] = n[0].experimental)) { // we have some experimental info
+      if ((n[2] = n[1].v.download)) {
+	out.experimental_change(b,n[1]);
+      }
+    }
+    return false;
+  }
+
+  function experimental_plugin(p,b,d) {
+    var n = [d];
+    if ((n[1] = n[0].v.experimental)) {
+      if ((n[2] = n[1].v.download)) {
+	out.experimental_plugin(b,n[1]);
+      }
+    }
+    return false;
+  }
+
+  function plugins(p,b,d) {
+    var n = [d];
+    if ((n[1] = n[0].plugins)) { // we have some plugin info
+      var s = false;
+      for (var i = 0; i < n[1].length; i++) {
+	if ((n[2] = n[1][i].v.download)) { // stable plugin found
+	  out.plugin(b,n[1][i]);
+	  s = true;
+	}
+      }
+      if (!s) { // no stable plugins
+	for (var i = 0; i < n[1].length; i++) {
+	  experimental_plugin(p,b,n[1][i]);
+	}
+      }
+      return s;
+    } else {
+      return false;
+    }
+  }
+
+  function platform(p,b,d) {
+    var n = [d];
+    if ((n[1] = n[0].platforms)) { // we have some platform info
+      if ((n[2] = n[1][p.id])) { // we have your platform info
+	if ((n[3] = n[2].upgrade)) { // you can upgrade
+	  out.upgrade(b,n[3]);
+	  return true;
+	} else if (plugins(p,b,n[2])) { // you have stable plugin options
+	  return true;
+	} else {
+	  experimental_change(p,b,n[2]);
+	  return false;
+	}
+      }
+    }
+    return false;
+  }
+
+  function detect() {
+    var b = diag.detectBrowser();
+    var p = diag.detectPlatform();
+    var d = diag.decisions[b.id];
+    if (diag.isWebGLSupported()) {
+      var gl = diag.webGLContext(out.canvasid);
+      if ((out.debug && out.debug.trouble) || gl === null) {
+	if (d.platforms && d.platforms[p.id] && d.platforms[p.id].trouble) {
+	  out.trouble(b,d.platforms[p.id].trouble,
+		      diag.detectDriver(out.canvasid));
+	} else {
+	  out.trouble(b,d.trouble,diag.detectDriver(out.canvasid));
+	}
+      } else {
+	out.ok();
+      }
+    } else {
+      if (d) { // we have a special message for you
+	if (!platform(p,b,d) // platform insufficient
+	    && !plugins(p,b,d)) { // plugin insufficient
+	  if (d.upgrade) { // has general upgrade info
+	    out.upgrade(b,d.upgrade);
+	  } else { // get a better browser
+	    experimental_change(p,b,d);
+	    out.change(p);
+	  }
+	}
+      } else { // we know nothing, get a better browser
+	out.change(p);
+      }
+    }
+  }
+
+  if (DAT.GUI) {
+    var datgui = new DAT.GUI();
+    datgui.add(debug, 'trouble').name("Trouble").onChange(function(v) {
+      out.reset(); detect();
+    });
+  }
+
+  detect();
 };

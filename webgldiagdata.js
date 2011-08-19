@@ -1,4 +1,4 @@
-if (!WebGLDiagnostic) { WebGLDiagnostic = {}; }
+if (typeof(WebGLDiagnostic)=="undefined") { WebGLDiagnostic = {}; }
 
 // type context_id = string
 WebGLDiagnostic.context_ids = [
@@ -24,6 +24,8 @@ WebGLDiagnostic.drivers = {
 //   download: url option;
 //   trouble: url option;
 // }
+// platforms, plugins, experimental cannot self-stack
+// precedence is platforms>plugins>experimental
 WebGLDiagnostic.decisions = {
   "Chrome" :
   { trouble: "http://www.google.com/support/chrome/bin/answer.py?answer=1220892",
@@ -49,20 +51,20 @@ WebGLDiagnostic.decisions = {
   },
 
   "Opera" :
-  { experimental:
-    { label: "Opera Developer Preview", // TODO: verify
-      v: { platforms:
-	   { "Windows":
-	     { trouble: "", // TODO
+  { platforms:
+    { "Windows":
+      { experimental:
+	{ label: "Opera Developer Preview", // TODO: verify
+	  v: { trouble: "", // TODO
 	       download: ""} // TODO
-	   }
-	 }
+	}
+      }
     }
   },
 
   "Explorer" :
   { plugins: [
-    { title: "Google Chrome Frame",
+    { label: "Google Chrome Frame",
       v: { download: "http://code.google.com/chrome/chromeframe/" }
     }]
   },
@@ -138,6 +140,12 @@ WebGLDiagnostic.browsers = {
       versionSearch: "Mozilla", name: "Netscape Navigator" }
 };
 
+// type platform = {
+//   id: string auto; (* set to the database key automatically *)
+//   string: string option; (* browser string to search *)
+//   subString: string list option; (* list of keywords to search for *)
+//   browsers: string list (* list of browser ids with WebGL on this platform *)
+// }
 WebGLDiagnostic.platforms = {
     "Windows" : { string: navigator.platform, subString: ["Win"],
 		  browsers: ["Chrome","Firefox"] },
