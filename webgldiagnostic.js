@@ -302,7 +302,7 @@ WebGLDiagnostic.diagnose = function (out) {
     }
   }
 
-  if (DAT && DAT.GUI) {
+  if (typeof(DAT)!="undefined" && DAT.GUI) {
     var datgui = new DAT.GUI();
     datgui.add(out.debug, 'trouble').name("Trouble").onChange(function(v) {
       out.reset(); detect();
