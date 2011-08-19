@@ -1,14 +1,15 @@
 <html>
 <head>
+<script type="text/javascript" src="webgldiagdata.js"></script>
 <script type="text/javascript" src="webgldiagnostic.js"></script>
 <script type="text/javascript">
 function main() {
   var i = WebGLDiagnostic.report('test-canvas');
   var r = document.getElementById('webgl-report');
   var dl= document.getElementById('driverlink');
-  var dhref = WebGLDiagnostic.driverLink('test-canvas');
-  if (dhref==null || dhref=="") { dl.innerHTML=""; }
-  else { dl.href=dhref; }
+  var d = WebGLDiagnostic.detectDriver('test-canvas');
+  if (d==null) { dl.innerHTML=""; }
+  else { dl.href=d.v; dl.innerHTML=dl.innerHTML+" ("+d.label+")"}
   r.innerHTML = i;
 }
 </script>

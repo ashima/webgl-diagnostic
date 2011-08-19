@@ -35,8 +35,6 @@ WebGLDiagnostic.decisions = {
 
   "Safari" :
   { trouble: "http://fairerplatform.com/2011/05/new-in-os-x-lion-safari-5-1-brings-webgl-do-not-track-and-more/",
-    download: "http://www.apple.com/safari/",
-    upgrade: "http://www.apple.com/safari/",
     platforms:
     { "iPhone/iPod":
       { trouble: "http://www.apple.com/support/iphone/",
@@ -46,6 +44,7 @@ WebGLDiagnostic.decisions = {
 	upgrade: "http://www.apple.com/ios/"},
       "Mac":
       { trouble: "http://fairerplatform.com/2011/05/new-in-os-x-lion-safari-5-1-brings-webgl-do-not-track-and-more/",
+        download: "http://www.apple.com/safari/",
 	upgrade: "http://www.apple.com/safari/"}
     }
   },

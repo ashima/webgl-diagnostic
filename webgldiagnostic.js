@@ -103,7 +103,7 @@ WebGLDiagnostic.detectDriver = function(canvasid) {
 
   for (v in this.drivers) {
     if ((new RegExp(v, "i")).test(renderer)) {
-      return this.drivers[v].url;
+      return this.drivers[v];
     }
   }
   return null;
