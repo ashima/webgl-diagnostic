@@ -25,7 +25,7 @@ var out = {
     var bl = [];
     for (var i = 0; i < p.browsers.length; i++) {
       var d = WebGLDiagnostic.decisions[p.browsers[i]];
-      var name = WebGLDiagnostic.browsers[p.browsers[i]];
+      var name = WebGLDiagnostic.browsers[p.browsers[i]].name;
       var url;
       if (d.platforms && d.platforms[p.id] && d.platforms[p.id].download) {
 	url = d.platforms[p.id].download;
