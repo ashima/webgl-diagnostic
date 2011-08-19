@@ -1,7 +1,7 @@
 /**
  * @preserve Copyright 2011 David Sheets, Ashima Arts. All rights reserved.
- * Open source under a BSD-style license.
- * See https://github.com/ashima/webgl-diagnostic for more information.
+ * Open source under an MIT-style license.
+ * See https://github.com/ashima/webgl-diagnostic/ for more information.
  */
 if (typeof(window["WebGLDiagnostic"])=="undefined") {
   WebGLDiagnostic = window["WebGLDiagnostic"] = {};
