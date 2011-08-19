@@ -1,16 +1,18 @@
-if (typeof(WebGLDiagnostic)=="undefined") { WebGLDiagnostic = {}; }
+if (typeof(window["WebGLDiagnostic"])=="undefined") {
+  WebGLDiagnostic = window["WebGLDiagnostic"] = {};
+}
 
 // type context_id = string
-WebGLDiagnostic.context_ids = [
+WebGLDiagnostic['context_ids'] = [
 "webgl","experimental-webgl","moz-webgl","webkit-3d" ];
 
 // type ext = string
-WebGLDiagnostic.exts = [
+WebGLDiagnostic['exts'] = [
 "OES_texture_float","OES_texture_half_float","WEBKIT_lose_context",
 "OES_standard_derivatives","OES_vertex_array_object" ];
 
 // type 'a label = { label: string; v: 'a }
-WebGLDiagnostic.drivers = {
+WebGLDiagnostic['drivers'] = {
   "nvidia":{label:"NVIDIA", v:"http://www.nvidia.com/Download/index.aspx"},
   "ati":{label:"ATI", v:"http://support.amd.com/us/gpudownload/Pages/index.aspx"},
   "osx":{label:"Apple", v:"http://www.apple.com/macosx/"}
@@ -26,7 +28,7 @@ WebGLDiagnostic.drivers = {
 // }
 // platforms, plugins, experimental cannot self-stack
 // precedence is platforms>plugins>experimental
-WebGLDiagnostic.decisions = {
+WebGLDiagnostic['decisions'] = {
   "Chrome" :
   { trouble: "http://www.google.com/support/chrome/bin/answer.py?answer=1220892",
     download: "http://www.google.com/chrome/",
@@ -85,7 +87,7 @@ WebGLDiagnostic.decisions = {
 //   prop: object option; (* alternatively, sniff by checking existence of prop *)
 //   p: int auto (* eval priority (smaller is sooner) defaults to 0 *)
 // }
-WebGLDiagnostic.browsers = {
+WebGLDiagnostic['browsers'] = {
     "Chrome" :
     { string: navigator.userAgent, subString: ["Chrome"],
       name: "Google Chrome" },
@@ -145,7 +147,7 @@ WebGLDiagnostic.browsers = {
 //   subString: string list option; (* list of keywords to search for *)
 //   browsers: string list (* list of browser ids with WebGL on this platform *)
 // }
-WebGLDiagnostic.platforms = {
+WebGLDiagnostic['platforms'] = {
     "Windows" : { string: navigator.platform, subString: ["Win"],
 		  browsers: ["Chrome","Firefox"] },
     "Mac" : { string: navigator.platform, subString: ["Mac"],
