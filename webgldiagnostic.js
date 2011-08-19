@@ -275,7 +275,7 @@ WebGLDiagnostic.diagnose = function (out) {
     var d = diag.decisions[b.id];
     if (!(out.debug && !out.debug.supported) && diag.isWebGLSupported()) {
       var gl = diag.webGLContext(out.canvasid);
-      if ((out.debug && out.debug.trouble) || gl === null) {
+      if ((out.debug && out.debug.trouble) || gl == null) {
 	if (d.platforms && d.platforms[p.id] && d.platforms[p.id].trouble) {
 	  out.trouble(b,d.platforms[p.id].trouble,
 		      diag.detectDriver(out.canvasid));
