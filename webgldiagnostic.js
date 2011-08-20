@@ -22,24 +22,24 @@ WebGLDiagnostic['caps'] = {
 };
 
 WebGLDiagnostic['_browserWithIdVersion'] = function(id,browser) {
-    browser.id = id;
+    browser['id'] = id;
     var i, idx, vstart,
-        vs = browser.versionSearch || id,
+        vs = browser['versionSearch'] || id,
         vstrs = [navigator.userAgent,navigator.appVersion];
     for (i = 0; i < vstrs.length; i++) {
 	idx = vstrs[i].indexOf(vs);
 	if (idx >= 0) {
 	    vstart = idx + vs.length + 1;
-	    browser.version = parseFloat(vstrs[i].substring(vstart));
+	    browser['version'] = parseFloat(vstrs[i].substring(vstart));
 	    return browser;
 	}
     }
-    browser.version = 0;
+    browser['version'] = 0;
     return browser;
 };
 
 WebGLDiagnostic['_platformWithId'] = function(id,platform) {
-    platform.id = id;
+    platform['id'] = id;
     return platform;
 };
 
@@ -55,15 +55,15 @@ WebGLDiagnostic['detectBrowser'] = function() {
 	var bn, bv, delay = {};
 	for (bn in bd) {
 	    bv = bd[bn];
-	    if (typeof(bv.p) == "undefined") { bv.p = 0; }
-	    if (p >= bv.p) {
-		if (bv.string) {
-		    for (var i = 0; i < bv.subString.length; i++) {
-			if (bv.string.indexOf(bv.subString[i]) != -1) {
+	    if (typeof(bv['p']) == "undefined") { bv['p'] = 0; }
+	    if (p >= bv['p']) {
+		if (bv['string']) {
+		    for (var i = 0; i < bv['subString'].length; i++) {
+			if (bv['string'].indexOf(bv['subString'][i]) != -1) {
 			    return diag['_browserWithIdVersion'](bn,bv);
 			}
 		    }
-		} else if (bv.prop) {
+		} else if (bv['prop']) {
 		    return diag['_browserWithIdVersion'](bn,bv);
 		}
 	    } else { delay[bn] = bv; }
@@ -82,9 +82,9 @@ WebGLDiagnostic['detectPlatform'] = function() {
 	var pn, pv;
 	for (pn in pd) {
 	    pv = pd[pn];
-	    if (pv.string) {
-		for (var i=0; i < pv.subString.length; i++) {
-		    if (pv.string.indexOf(pv.subString[i]) != -1) {
+	    if (pv['string']) {
+		for (var i=0; i < pv['subString'].length; i++) {
+		    if (pv['string'].indexOf(pv['subString'][i]) != -1) {
 			return diag['_platformWithId'](pn,pv);
 		    }
 		}
@@ -219,8 +219,8 @@ WebGLDiagnostic['diagnose'] = function (out) {
 
   function experimental_change(p,b,d) {
     var n = [d];
-    if ((n[1] = n[0].experimental)) { // we have some experimental info
-      if ((n[2] = n[1].v.download)) {
+    if ((n[1] = n[0]['experimental'])) { // we have some experimental info
+      if ((n[2] = n[1]['v']['download'])) {
 	out['experimental_change'](b,n[1]);
       }
     }
@@ -229,8 +229,8 @@ WebGLDiagnostic['diagnose'] = function (out) {
 
   function experimental_plugin(p,b,d) {
     var n = [d];
-    if ((n[1] = n[0].v.experimental)) {
-      if ((n[2] = n[1].v.download)) {
+    if ((n[1] = n[0]['v']['experimental'])) {
+      if ((n[2] = n[1]['v']['download'])) {
 	out['experimental_plugin'](b,n[1]);
       }
     }
@@ -239,10 +239,10 @@ WebGLDiagnostic['diagnose'] = function (out) {
 
   function plugins(p,b,d) {
     var n = [d];
-    if ((n[1] = n[0].plugins)) { // we have some plugin info
+    if ((n[1] = n[0]['plugins'])) { // we have some plugin info
       var s = false;
       for (var i = 0; i < n[1].length; i++) {
-	if ((n[2] = n[1][i].v.download)) { // stable plugin found
+	if ((n[2] = n[1][i]['v']['download'])) { // stable plugin found
 	  out['plugin'](b,n[1][i]);
 	  s = true;
 	}
@@ -260,9 +260,9 @@ WebGLDiagnostic['diagnose'] = function (out) {
 
   function platform(p,b,d) {
     var n = [d];
-    if ((n[1] = n[0].platforms)) { // we have some platform info
-      if ((n[2] = n[1][p.id])) { // we have your platform info
-	if ((n[3] = n[2].upgrade)) { // you can upgrade
+    if ((n[1] = n[0]['platforms'])) { // we have some platform info
+      if ((n[2] = n[1][p['id']])) { // we have your platform info
+	if ((n[3] = n[2]['upgrade'])) { // you can upgrade
 	  out['upgrade'](b,n[3]);
 	  return true;
 	} else if (plugins(p,b,n[2])) { // you have stable plugin options
@@ -279,15 +279,15 @@ WebGLDiagnostic['diagnose'] = function (out) {
   function detect() {
     var b = diag['detectBrowser']();
     var p = diag['detectPlatform']();
-    var d = diag['decisions'][b.id];
+    var d = diag['decisions'][b['id']];
     if (!(out['debug'] && !out['debug']['supported']) && diag['isWebGLSupported']()) {
       var gl = diag['webGLContext'](out['canvasid']);
       if ((out['debug'] && out['debug']['trouble']) || gl == null) {
-	if (d.platforms && d.platforms[p.id] && d.platforms[p.id].trouble) {
-	  out['trouble'](b,d.platforms[p.id].trouble,
+	if (d['platforms'] && d['platforms'][p['id']] && d['platforms'][p['id']]['trouble']) {
+	  out['trouble'](b,d['platforms'][p['id']]['trouble'],
 		      diag['detectDriver'](out['canvasid']));
 	} else {
-	  out['trouble'](b,d.trouble,diag['detectDriver'](out['canvasid']));
+	  out['trouble'](b,d['trouble'],diag['detectDriver'](out['canvasid']));
 	}
       } else {
 	out['ok']();
@@ -296,8 +296,8 @@ WebGLDiagnostic['diagnose'] = function (out) {
       if (d) { // we have a special message for you
 	if (!platform(p,b,d) // platform insufficient
 	    && !plugins(p,b,d)) { // plugin insufficient
-	  if (d.upgrade) { // has general upgrade info
-	    out['upgrade'](b,d.upgrade);
+	  if (d['upgrade']) { // has general upgrade info
+	    out['upgrade'](b,d['upgrade']);
 	  } else { // get a better browser
 	    experimental_change(p,b,d);
 	    out['change'](p,b);
