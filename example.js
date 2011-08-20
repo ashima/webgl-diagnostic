@@ -34,7 +34,6 @@ var out = {
       }
       bl[bl.length] = "<li><a href='"+url+"'>"+name+"</a></li>";
     }
-    // TODO: can't use id for multilingual messages
     $$("change-webgl-browser").innerHTML = b.name+" "+b.version;
     $$("change-webgl-platform").innerHTML = p.id;
     $$("change-webgl-browserlist").innerHTML = bl.join("");
@@ -42,14 +41,13 @@ var out = {
   },
   // browser -> url -> unit
   upgrade: function(b,url) {
-    // TODO: can't use id for multilingual messages
     $$("upgrade-webgl-browser").innerHTML = b.name+" "+b.version;
-    $$("upgrade-webgl-link").innerHTML = "<a href='"+url+"'>upgrade</a>";
+    $$("upgrade-webgl-link").innerHTML =
+      "<a href='"+url+"'>"+$$("upgrade-webgl-link").innerHTML+"</a>";
     $$("upgrade-webgl").style.display = "block";
   },
   // browser -> url label -> unit
   plugin: function (b,link) {
-    // TODO: can't use id for multilingual messages
     $$("plugin-webgl-browser").innerHTML = b.name+" "+b.version;
     $$("plugin-webgl-pluginlist").innerHTML =
       $$("plugin-webgl-pluginlist").innerHTML
@@ -65,17 +63,18 @@ var out = {
     if (b == null) {
       $$("trouble-webgl-anon").style.display = "block";
     } else {
-      $$("trouble-webgl-support").innerHTML =
-	"<a href='"+url+"'>Visit "+b.name+"'s support site</a>";
+      var s = $$("trouble-webgl-support");
+      s.innerHTML = "<a href='"+url+"'>"+s.innerHTML+"</a>";
+      $$("trouble-webgl-browser").innerHTML = b.name;
       $$("trouble-webgl-known").style.display = "block";
     }
 
     if (driver == null) {
       $$("trouble-webgl-nodriver").style.display = "block";
     } else {
-      $$("trouble-webgl-driver-link").innerHTML =
-	"<a href='"+driver.v+"'>update your "
-	+driver.label+" graphics drivers</a>";
+      var l = $$("trouble-webgl-driver-link");
+      l.innerHTML = "<a href='"+driver.v+"'>"+l.innerHTML+"</a>";
+      $$("trouble-webgl-driver-vendor").innerHTML = driver.label;
       $$("trouble-webgl-driver").style.display = "block";
     }
     $$("trouble-webgl").style.display = "block";
