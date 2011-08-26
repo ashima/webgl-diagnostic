@@ -1,0 +1,126 @@
+<?xml version='1.0'?>
+
+<diagnostic>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  </head>
+  <messages>
+    <message id="no-support">
+      It looks like you are
+      using <browser field="name" /> which does not
+      support WebGL.      
+    </message>
+
+    <message id="change">
+      Unfortunately, there are no newer versions of your browser with
+      WebGL support; however, the following browsers with WebGL support
+      may be available for <platform field="name" />:
+      <platform>
+	<list select="browsers" as="browser">
+	  <browser>
+	    <link select="download">
+	      <browser field="name" />
+	    </link>
+	  </browser>
+	</list>
+      </platform>
+    </message>
+
+    <message id="override">
+      I know what I'm doing; let me try anyway.
+    </message>
+
+    <message id="upgrade">
+      Please <browser><link select="upgrade">upgrade</link></browser>
+      your browser to view WebGL content.
+    </message>
+
+    <message id="plugin">
+      The following WebGL browser plugins are available:
+      <browser>
+	<list select="plugins" as="plugin">
+	  <plugin>
+	    <link select="download">
+	      <plugin field="name" />
+	    </link>
+	  </plugin>
+	</list>
+      </browser>
+    </message>
+
+    <message id="plugin-restart">
+      Remember to restart your browser after installing a plugin.
+    </message>
+
+    <message id="experimental-plugin">
+      The following experimental WebGL browser plugins are available:
+      <browser>
+	<list select="plugins" as="plugin">
+	  <plugin>
+	    <link select="download">
+	      <plugin field="name" />
+	    </link>
+	  </plugin>
+	</list>
+      </browser>
+    </message>
+
+    <message id="experimental-change">
+      Unfortunately, there are no newer versions of your browser with
+      WebGL support; however, the following experimental browsers with
+      WebGL support may be available for <platform field="name" />:
+      <platform>
+	<list select="browsers" as="browser">
+	  <browser>
+	    <link select="download">
+	      <browser field="name" />
+	    </link>
+	  </browser>
+	</list>
+      </platform>
+    </message>
+
+    <message id="trouble">
+      Your browser is WebGL-capable but support is disabled or
+      unavailable.
+    </message>
+    
+    <message id="trouble-nodriver">
+      A common cause of WebGL unavailability is out-of-date graphics
+      drivers. Please ensure your graphics drivers are up-to-date.
+    </message>
+
+    <message id="trouble-driver">
+      It may help to
+      <driver>
+	<link select="upgrade">
+	  update your <driver field="vendor" /> graphics drivers
+	</link>
+      </driver>
+      to the latest version and restart your system.
+    </message>
+
+    <message id="trouble-nobrowser">
+      Visit your browser's support site for more information.
+    </message>
+    
+    <message id="trouble-browser">
+      <browser>
+	<link select="trouble">
+	  Visit <browser field="name" />'s support site
+	</link>
+      </browser>
+      for more information.
+    </message>
+    
+    <message id="experimental-ok">
+      Your browser indicates that its WebGL support is experimental. You
+      may experience problems with some content.
+    </message>
+
+    <message id="no-script">
+      Javascript is required to experience WebGL content.
+      Please enable Javascript.
+    </message>
+  </messages>
+</diagnostic>
