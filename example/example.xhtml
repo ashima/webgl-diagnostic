@@ -1,4 +1,4 @@
-<html>
+<html xmlns:diag="http://github.com/ashima/webgl-diagnostic">
 <head>
 <style>
 .webgl-message { display: none; }
@@ -17,96 +17,62 @@
 
 <div>
   <div class="webgl-message" id="change-webgl">
-    <p lang="en">
-      It looks like you are
-      using <span id="change-webgl-browser"></span> which does not
-      support WebGL.
-    </p>
-    <p lang="en">
-      Unfortunately, there are no newer versions of your browser with
-      WebGL support; however, the following browsers with WebGL support
-      may be available for <span id="change-webgl-platform"></span>:
-      <ul id="change-webgl-browserlist"></ul>
-    </p>
-    <p lang="en" class="override-webgl">
-      <a href="http://ashimagames.com/ooman/tutorial.html">I know what
-      I'm doing, let me try anyway</a>
+    <p><diag:message id="no-support" /></p>
+    <p><diag:message id="change" /></p>
+    <p class="override-webgl">
+      <a href="http://ashimagames.com/ooman/tutorial.html">
+	<diag:message id="override" />
+      </a>
     </p>
   </div>
   <div class="webgl-message" id="upgrade-webgl">
-    <p lang="en">
-      It looks like you are
-      using <span id="upgrade-webgl-browser"></span> which does not
-      support WebGL.
-    </p>
-    <p lang="en">
-      Please <span id="upgrade-webgl-link">upgrade</span> your browser to view
-      WebGL content.
-    </p>
-    <p lang="en" class="override-webgl">
-      <a href="http://ashimagames.com/ooman/tutorial.html">I know what
-      I'm doing, let me try anyway</a>
+    <p><diag:message id="no-support" /></p>
+    <p><diag:message id="upgrade" /></p>
+    <p class="override-webgl">
+      <a href="http://ashimagames.com/ooman/tutorial.html">
+	<diag:message id="override" />
+      </a>
     </p>
   </div>
   <div class="webgl-message" id="plugin-webgl">
-    <p lang="en">
-      It looks like you are
-      using <span id="plugin-webgl-browser"></span> which does not
-      support WebGL.
-    </p>
-    <p lang="en">
-      The following WebGL browser plugins are available:
-      <ul id="plugin-webgl-pluginlist"></ul>
-    </p>
-    <p lang="en">
-      Remember to restart your browser after installing a plugin.
-    </p>
-    <p lang="en" class="override-webgl">
-      <a href="http://ashimagames.com/ooman/tutorial.html">I know what
-      I'm doing, let me try anyway</a>
+    <p><diag:message id="no-support" /></p>
+    <p><diag:message id="plugin" /></p>
+    <p><diag:message id="plugin-restart" /></p>
+    <p class="override-webgl">
+      <a href="http://ashimagames.com/ooman/tutorial.html">
+	<diag:message id="override" />
+      </a>
     </p>
   </div>
   <div class="webgl-message" id="experimental-plugin-webgl">
-    <p lang="en"></p>
   </div>
   <div class="webgl-message" id="experimental-change-webgl">
-    <p lang="en"></p>
   </div>
   <div class="webgl-message" id="trouble-webgl">
-    <p lang="en">
-      Your browser is WebGL-capable but support is disabled or
-      unavailable.
+    <p><diag:message id="trouble" /></p>
+    <p id="trouble-webgl-nodriver" style="display: none">
+      <diag:message id="trouble-nodriver" />
     </p>
-    <p lang="en" id="trouble-webgl-nodriver" style="display: none">
-      A common cause of WebGL unavailability is out-of-date graphics
-      drivers. Please ensure your graphics drivers are up-to-date.
+    <p id="trouble-webgl-driver" style="display: none">
+      <diag:message id="trouble-driver" />
     </p>
-    <p lang="en" id="trouble-webgl-driver" style="display: none">
-      It may help to
-      <span id="trouble-webgl-driver-link">
-	update your <span id="trouble-webgl-driver-vendor"></span>
-	graphics drivers</span> to the
-      latest version and restart your system.
+    <p id="trouble-webgl-anon" style="display: none">
+      <diag:message id="trouble-nobrowser" />
     </p>
-    <p lang="en" id="trouble-webgl-anon" style="display: none">
-      Visit your browser's support site for more information.
+    <p id="trouble-webgl-known" style="display: none">
+      <diag:message id="trouble-browser" />
     </p>
-    <p lang="en" id="trouble-webgl-known" style="display: none">
-      <span id="trouble-webgl-support">
-	Visit <span id="trouble-webgl-browser"></span>'s support site</span>
-      for more information.
-    </p>
-    <p lang="en" class="override-webgl">
-      <a href="http://ashimagames.com/ooman/tutorial.html">I know what
-      I'm doing, let me try anyway</a>
+    <p class="override-webgl">
+      <a href="http://ashimagames.com/ooman/tutorial.html">
+	<diag:message id="override" />
+      </a>
     </p>
   </div>
   <div class="webgl-message" id="ok-webgl">
-    <p lang="en" class="webgl-message" id="ok-webgl-experimental">
-      Your browser indicates that its WebGL support is experimental. You
-      may experience problems with some content.
+    <p class="webgl-message" id="ok-webgl-experimental">
+      <diag:message id="experimental-ok" />
     </p>
-    <p lang="en">
+    <p>
       <a href="http://ashimagames.com/ooman/tutorial.html">Play Ooman</a>
     </p>
   </div>
@@ -114,7 +80,7 @@
 
 <noscript>
   <div class="webgl-message" style="display: block">
-    Javascript is required to experience WebGL content. Please enable Javascript.
+    <diag:message id="no-script" />
   </div>
 </noscript>
 
