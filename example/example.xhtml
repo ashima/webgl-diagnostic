@@ -1,11 +1,9 @@
 <html xmlns:diag="http://github.com/ashima/webgl-diagnostic">
 <head>
 <style>
-.webgl-message { display: none; }
-.override-webgl { font-size: 70% }
+.webgldiag-message { display: none; }
+.webgldiag-override { font-size: 70% }
 </style>
-<!-- DAT.GUI for debugging only -->
-<!--<script type="text/javascript" src="DAT.GUI.min.js"></script>-->
 <!--<script type="text/javascript" src="../js/webgldiagdata.js"></script>
 <script type="text/javascript" src="../js/webgldiagnostic.js"></script>-->
 <script type="text/javascript" src="../js/webgldiag.min.js"></script>
@@ -15,61 +13,61 @@
 <canvas id="test-canvas" style="display: none" width="1"
 	height="1"></canvas>
 
-<div>
-  <div class="webgl-message" id="change-webgl">
+<div id="webgldiag-messages">
+  <div class="webgldiag-message" id="webgldiag-change">
     <p><diag:message id="no-support" /></p>
     <p><diag:message id="change" /></p>
-    <p class="override-webgl">
+    <p class="webgldiag-override">
       <a href="http://ashimagames.com/ooman/tutorial.html">
 	<diag:message id="override" />
       </a>
     </p>
   </div>
-  <div class="webgl-message" id="upgrade-webgl">
+  <div class="webgldiag-message" id="webgldiag-upgrade">
     <p><diag:message id="no-support" /></p>
     <p><diag:message id="upgrade" /></p>
-    <p class="override-webgl">
+    <p class="webgldiag-override">
       <a href="http://ashimagames.com/ooman/tutorial.html">
 	<diag:message id="override" />
       </a>
     </p>
   </div>
-  <div class="webgl-message" id="plugin-webgl">
+  <div class="webgldiag-message" id="webgldiag-plugin">
     <p><diag:message id="no-support" /></p>
     <p><diag:message id="plugin" /></p>
     <p><diag:message id="plugin-restart" /></p>
-    <p class="override-webgl">
+    <p class="webgldiag-override">
       <a href="http://ashimagames.com/ooman/tutorial.html">
 	<diag:message id="override" />
       </a>
     </p>
   </div>
-  <div class="webgl-message" id="experimental-plugin-webgl">
+  <div class="webgldiag-message" id="webgldiag-experimental-plugin">
   </div>
-  <div class="webgl-message" id="experimental-change-webgl">
+  <div class="webgldiag-message" id="webgldiag-experimental-change">
   </div>
-  <div class="webgl-message" id="trouble-webgl">
+  <div class="webgldiag-message" id="webgldiag-trouble">
     <p><diag:message id="trouble" /></p>
-    <p id="trouble-webgl-nodriver" style="display: none">
+    <p id="webgldiag-trouble-nodriver" style="display: none">
       <diag:message id="trouble-nodriver" />
     </p>
-    <p id="trouble-webgl-driver" style="display: none">
+    <p id="webgldiag-trouble-driver" style="display: none">
       <diag:message id="trouble-driver" />
     </p>
-    <p id="trouble-webgl-anon" style="display: none">
+    <p id="webgldiag-trouble-nobrowser" style="display: none">
       <diag:message id="trouble-nobrowser" />
     </p>
-    <p id="trouble-webgl-known" style="display: none">
+    <p id="webgldiag-trouble-browser" style="display: none">
       <diag:message id="trouble-browser" />
     </p>
-    <p class="override-webgl">
+    <p class="webgldiag-override">
       <a href="http://ashimagames.com/ooman/tutorial.html">
 	<diag:message id="override" />
       </a>
     </p>
   </div>
-  <div class="webgl-message" id="ok-webgl">
-    <p class="webgl-message" id="ok-webgl-experimental">
+  <div class="webgldiag-message" id="webgldiag-ok">
+    <p class="webgldiag-message" id="webgldiag-experimental-ok">
       <diag:message id="experimental-ok" />
     </p>
     <p>
@@ -79,7 +77,7 @@
 </div>
 
 <noscript>
-  <div class="webgl-message" style="display: block">
+  <div class="webgldiag-message" style="display: block">
     <diag:message id="no-script" />
   </div>
 </noscript>
