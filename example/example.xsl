@@ -69,13 +69,9 @@
 
   </xsl:template>
   <xsl:template match="browser" mode="js">
-    <![CDATA[
     c.push(browser);
-    ]]>
     <xsl:apply-templates select="@* | *" mode="js" />
-    <![CDATA[
     c.pop();
-    ]]>
   </xsl:template>
 
   <xsl:template match="platform[@field!='']">
@@ -90,17 +86,16 @@
     
   </xsl:template>
   <xsl:template match="platform" mode="js">
-    <![CDATA[
     c.push(platform);
-    ]]>
     <xsl:apply-templates select="@* | *" mode="js" />
-    <![CDATA[
     c.pop();
-    ]]>
   </xsl:template>
 
   <xsl:template match="@field" mode="js">
-    
+    <xsl:text>var node = document.getElementById('webgldiag-</xsl:text>
+    <xsl:value-of select="generate-id(..)" />
+    <xsl:text>');</xsl:text>
+    node.innerHTML = c[c.length - 1].<xsl:value-of select="." />;
   </xsl:template>
 
   <xsl:template match="driver">
@@ -112,10 +107,40 @@
   </xsl:template>
 
   <xsl:template match="link">
-
+    <a>
+      <xsl:attribute name="id">
+	<xsl:text>webgldiag-</xsl:text>
+	<xsl:value-of select="generate-id()" />
+      </xsl:attribute>
+      <xsl:apply-templates select="@* | *" />
+    </a>
+  </xsl:template>
+  <xsl:template match="link" mode="js">
+    <xsl:text>var node = document.getElementById('webgldiag-</xsl:text>
+    <xsl:value-of select="generate-id()" />
+    <xsl:text>');</xsl:text>
+    node.href = c[c.length - 1].<xsl:value-of select="@select" />;
+    <xsl:apply-templates select="*" mode="js" />
   </xsl:template>
 
   <xsl:template match="list">
-    
+    <ul>
+      <xsl:attribute name="id">
+	<xsl:text>webgldiag-</xsl:text>
+	<xsl:value-of select="generate-id()" />
+      </xsl:attribute>
+      <xsl:apply-templates select="@* | *" />
+    </ul>
   </xsl:template>
+  <xsl:template match="list" mode="js">
+    var lst = c[c.length - 1].<xsl:value-of select="@select" />;
+    <xsl:text>var node = document.getElementById('webgldiag-</xsl:text>
+    <xsl:value-of select="generate-id()" />
+    <xsl:text>');</xsl:text>
+    for (var i = 0; i<![CDATA[ < ]]>lst.length; i++) {
+      <xsl:value-of select="@as" /> = lst[i];
+      <xsl:apply-templates select="*" mode="js" />
+    }
+  </xsl:template>
+
 </xsl:stylesheet>

@@ -309,17 +309,5 @@ WebGLDiagnostic['diagnose'] = function (out) {
     }
   }
 
-  // can use DAT for debugging
-/*if (typeof(DAT)!="undefined" && DAT.GUI) {
-    var datgui = new DAT.GUI();
-    datgui.add(out['debug'], 'trouble').name("Trouble").onChange(function(v) {
-      out['reset'](); detect();
-    });
-    datgui.add(out['debug'], 'supported').name("Supported").onChange(function (v) {
-      out['reset'](); detect();
-    });
-  }
-*/
-
   detect();
 };

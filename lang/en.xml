@@ -7,8 +7,8 @@
   <messages>
     <message id="no-support">
       It looks like you are
-      using <browser field="name" /> which does not
-      support WebGL.      
+      using <browser field="name" /> <browser field="version" /> which does not
+      support WebGL.
     </message>
 
     <message id="change">
@@ -36,7 +36,7 @@
     </message>
 
     <message id="plugin">
-      The following WebGL browser plugins are available:
+      The following WebGL browser plugins are available for your browser:
       <browser>
 	<list select="plugins" as="plugin">
 	  <plugin>
@@ -53,7 +53,8 @@
     </message>
 
     <message id="experimental-plugin">
-      The following experimental WebGL browser plugins are available:
+      The following experimental WebGL browser plugins are available for
+      your browser:
       <browser>
 	<list select="plugins" as="plugin">
 	  <plugin>
