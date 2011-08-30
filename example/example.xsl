@@ -10,6 +10,24 @@
       name="exprs"
       select="document(concat('../lang/',$lang,'.xml'))/diagnostic" />
 
+  <xsl:template name="idtag">
+    <xsl:param name="tag" />
+    <xsl:element name="{$tag}">
+      <xsl:attribute name="id">
+	<xsl:text>webgldiag-</xsl:text>
+	<xsl:value-of select="generate-id()" />
+      </xsl:attribute>
+      <xsl:apply-templates select="* | text()" />
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template name="idstr">
+    <xsl:param name="node" select="." />
+    <xsl:text>'webgldiag-</xsl:text>
+    <xsl:value-of select="generate-id($node)" />
+    <xsl:text>'</xsl:text>
+  </xsl:template>
+
   <xsl:template match="@* | node()">
     <xsl:copy>
       <xsl:apply-templates select="@* | node()" />
@@ -26,11 +44,11 @@
   <xsl:template match="*[@id='webgldiag-messages']/*[@id]">
     <script>
       function <xsl:value-of select="@id" />(p,b,d) {
-      var browser = b, platform = p, driver = d, c = [];
+      var c, e;
 
       <xsl:apply-templates select="*" mode="js" />
 
-      var self = document.getElementById('<xsl:value-of select="@id" />');
+      var self = $$('<xsl:value-of select="@id" />');
       self.style.display = 'block';
       reset[reset.length] = function () { self.style.display = 'none'; };
       }
@@ -57,90 +75,59 @@
   </xsl:template>
   <xsl:template match="text()" mode="js" />
 
-  <xsl:template match="browser[@field!='']">
-    <span>
-      <xsl:attribute name="id">
-	<xsl:text>webgldiag-</xsl:text>
-	<xsl:value-of select="generate-id()" />
-      </xsl:attribute>
-    </span>
-  </xsl:template>
-  <xsl:template match="browser">
-
-  </xsl:template>
-  <xsl:template match="browser" mode="js">
-    c.push(browser);
-    <xsl:apply-templates select="@* | *" mode="js" />
-    c.pop();
-  </xsl:template>
-
   <xsl:template match="platform[@field!='']">
-    <span>
-      <xsl:attribute name="id">
-	<xsl:text>webgldiag-</xsl:text>
-	<xsl:value-of select="generate-id()" />
-      </xsl:attribute>
-    </span>
-  </xsl:template>
-  <xsl:template match="platform">
-    
+    <xsl:call-template name="idtag">
+      <xsl:with-param name="tag" select="'span'" />
+    </xsl:call-template>
   </xsl:template>
   <xsl:template match="platform" mode="js">
-    c.push(platform);
+    c = p;
     <xsl:apply-templates select="@* | *" mode="js" />
-    c.pop();
+  </xsl:template>
+
+  <xsl:template match="browser[@field!='']">
+    <xsl:call-template name="idtag">
+      <xsl:with-param name="tag" select="'span'" />
+    </xsl:call-template>
+  </xsl:template>
+  <xsl:template match="browser" mode="js">
+    c = b;
+    <xsl:apply-templates select="@* | *" mode="js" />
+  </xsl:template>
+
+  <xsl:template match="driver[@field!='']">
+    <xsl:call-template name="idtag">
+      <xsl:with-param name="tag" select="'span'" />
+    </xsl:call-template>
+  </xsl:template>
+  <xsl:template match="driver" mode="js">
+    c = d;
+    <xsl:apply-templates select="@* | *" mode="js" />
   </xsl:template>
 
   <xsl:template match="@field" mode="js">
-    <xsl:text>var node = document.getElementById('webgldiag-</xsl:text>
-    <xsl:value-of select="generate-id(..)" />
-    <xsl:text>');</xsl:text>
-    node.innerHTML = c[c.length - 1].<xsl:value-of select="." />;
+    <xsl:text>e = $$(</xsl:text>
+    <xsl:call-template name="idstr">
+      <xsl:with-param name="node" select=".." />
+    </xsl:call-template>
+    <xsl:text>);</xsl:text>
+    e.innerHTML = c.<xsl:value-of select="." />;
   </xsl:template>
 
-  <xsl:template match="driver">
-
-  </xsl:template>
-
-  <xsl:template match="plugin">
-    
+  <xsl:template match="platform | browser | driver">
+    <xsl:apply-templates select="@* | *" />
   </xsl:template>
 
   <xsl:template match="link">
-    <a>
-      <xsl:attribute name="id">
-	<xsl:text>webgldiag-</xsl:text>
-	<xsl:value-of select="generate-id()" />
-      </xsl:attribute>
-      <xsl:apply-templates select="@* | *" />
-    </a>
+    <xsl:call-template name="idtag">
+      <xsl:with-param name="tag" select="'a'" />
+    </xsl:call-template>
   </xsl:template>
   <xsl:template match="link" mode="js">
-    <xsl:text>var node = document.getElementById('webgldiag-</xsl:text>
-    <xsl:value-of select="generate-id()" />
-    <xsl:text>');</xsl:text>
-    node.href = c[c.length - 1].<xsl:value-of select="@select" />;
+    <xsl:text>e = $$(</xsl:text>
+    <xsl:call-template name="idstr" />
+    <xsl:text>);</xsl:text>
+    e.href = c.<xsl:value-of select="@select" />;
     <xsl:apply-templates select="*" mode="js" />
   </xsl:template>
-
-  <xsl:template match="list">
-    <ul>
-      <xsl:attribute name="id">
-	<xsl:text>webgldiag-</xsl:text>
-	<xsl:value-of select="generate-id()" />
-      </xsl:attribute>
-      <xsl:apply-templates select="@* | *" />
-    </ul>
-  </xsl:template>
-  <xsl:template match="list" mode="js">
-    var lst = c[c.length - 1].<xsl:value-of select="@select" />;
-    <xsl:text>var node = document.getElementById('webgldiag-</xsl:text>
-    <xsl:value-of select="generate-id()" />
-    <xsl:text>');</xsl:text>
-    for (var i = 0; i<![CDATA[ < ]]>lst.length; i++) {
-      <xsl:value-of select="@as" /> = lst[i];
-      <xsl:apply-templates select="*" mode="js" />
-    }
-  </xsl:template>
-
 </xsl:stylesheet>

@@ -15,15 +15,6 @@
       Unfortunately, there are no newer versions of your browser with
       WebGL support; however, the following browsers with WebGL support
       may be available for <platform field="name" />:
-      <platform>
-	<list select="browsers" as="browser">
-	  <browser>
-	    <link select="download">
-	      <browser field="name" />
-	    </link>
-	  </browser>
-	</list>
-      </platform>
     </message>
 
     <message id="override">
@@ -37,15 +28,6 @@
 
     <message id="plugin">
       The following WebGL browser plugins are available for your browser:
-      <browser>
-	<list select="plugins" as="plugin">
-	  <plugin>
-	    <link select="download">
-	      <plugin field="name" />
-	    </link>
-	  </plugin>
-	</list>
-      </browser>
     </message>
 
     <message id="plugin-restart">
@@ -55,30 +37,12 @@
     <message id="experimental-plugin">
       The following experimental WebGL browser plugins are available for
       your browser:
-      <browser>
-	<list select="plugins" as="plugin">
-	  <plugin>
-	    <link select="download">
-	      <plugin field="name" />
-	    </link>
-	  </plugin>
-	</list>
-      </browser>
     </message>
 
     <message id="experimental-change">
       Unfortunately, there are no newer versions of your browser with
       WebGL support; however, the following experimental browsers with
       WebGL support may be available for <platform field="name" />:
-      <platform>
-	<list select="browsers" as="browser">
-	  <browser>
-	    <link select="download">
-	      <browser field="name" />
-	    </link>
-	  </browser>
-	</list>
-      </platform>
     </message>
 
     <message id="trouble">
