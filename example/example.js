@@ -5,7 +5,7 @@ function nmap(name,fn) {
 }
 function html(v) { return function (e) { e.innerHTML = v; }; }
 function href(v) { return function (e) { e.href = v; }; }
-function show(e) { e.style.display = "auto"; }
+function show(e) { e.style.display = "block"; }
 function hide(e) { e.style.display = "none"; }
 var ns = "webgldiag-";
 
