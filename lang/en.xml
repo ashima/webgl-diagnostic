@@ -11,9 +11,13 @@
       support WebGL.
     </message>
 
-    <message id="change">
+    <message id="obsolete">
       Unfortunately, there are no newer versions of your browser with
-      WebGL support; however, the following browsers with WebGL support
+      WebGL support.
+    </message>
+
+    <message id="change">
+      The following browsers with WebGL support
       may be available for <platform field="name" />:
     </message>
 
@@ -22,7 +26,7 @@
     </message>
 
     <message id="upgrade">
-      Please <browser><link select="upgrade">upgrade</link></browser>
+      Please <browser link="upgrade">upgrade</browser>
       your browser to view WebGL content.
     </message>
 
@@ -31,7 +35,7 @@
     </message>
 
     <message id="plugin-restart">
-      Remember to restart your browser after installing a plugin.
+      After installing a plugin, remember to restart your browser.
     </message>
 
     <message id="experimental-plugin">
@@ -40,8 +44,7 @@
     </message>
 
     <message id="experimental-change">
-      Unfortunately, there are no newer versions of your browser with
-      WebGL support; however, the following experimental browsers with
+      The following experimental browsers with
       WebGL support may be available for <platform field="name" />:
     </message>
 
@@ -57,10 +60,8 @@
 
     <message id="trouble-driver">
       It may help to
-      <driver>
-	<link select="upgrade">
-	  update your <driver field="vendor" /> graphics drivers
-	</link>
+      <driver link="upgrade">
+	update your <driver field="vendor" /> graphics drivers
       </driver>
       to the latest version and restart your system.
     </message>
@@ -70,10 +71,8 @@
     </message>
     
     <message id="trouble-browser">
-      <browser>
-	<link select="trouble">
-	  Visit <browser field="name" />'s support site
-	</link>
+      <browser link="trouble">
+	Visit <browser field="name" />'s support site
       </browser>
       for more information.
     </message>
