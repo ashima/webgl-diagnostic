@@ -58,7 +58,7 @@ var out = {
     show($$(ns+"upgrade"));
   },
   // browser -> url label -> unit
-  plugin: function (b,link) {
+  plugin: function (b,link) { // called once for each plugin
     var la = "<li><a href='"+link.v.download+"'>"+link.label+"</a></li>";
     nmap(ns+"browser-name",html(b.name));
     nmap(ns+"browser-version",html(b.version));
