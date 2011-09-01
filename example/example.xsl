@@ -4,7 +4,7 @@
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:diag="http://github.com/ashima/webgl-diagnostic">
   <xsl:output method="html" omit-xml-declaration="yes" />
-  
+
   <xsl:param name="lang" select="'en'" />
   <xsl:variable
       name="exprs"
@@ -73,7 +73,7 @@
       </xsl:attribute>
       <xsl:apply-templates select="* | text()">
 	<xsl:with-param name="msgnode" select="$msgnode" />
-      </xsl:apply-templates></a>
+    </xsl:apply-templates></a>
   </xsl:template>
   <xsl:template name="inslink">
     <xsl:param name="msgnode" />
