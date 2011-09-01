@@ -72,7 +72,9 @@
 	<xsl:text>webgldiag-</xsl:text>
 	<xsl:value-of select="concat(generate-id($msgnode),generate-id())" />
       </xsl:attribute>
-      <xsl:apply-templates select="* | text()" />
+      <xsl:apply-templates select="* | text()">
+	<xsl:with-param name="msgnode" select="$msgnode" />
+      </xsl:apply-templates>
     </a>
   </xsl:template>
   <xsl:template name="inslink">
@@ -109,7 +111,9 @@
     <xsl:call-template name="inslink">
       <xsl:with-param name="msgnode" select="$msgnode" />
     </xsl:call-template>
-    <xsl:apply-templates select="*" mode="js" />
+    <xsl:apply-templates select="*" mode="js">
+      <xsl:with-param name="msgnode" select="$msgnode" />
+    </xsl:apply-templates>
   </xsl:template>
 
 </xsl:stylesheet>
