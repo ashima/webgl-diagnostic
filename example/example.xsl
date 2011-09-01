@@ -67,15 +67,13 @@
   </xsl:template>
   <xsl:template name="link">
     <xsl:param name="msgnode" />
-    <a>
-      <xsl:attribute name="id">
+    <a><xsl:attribute name="id">
 	<xsl:text>webgldiag-</xsl:text>
 	<xsl:value-of select="concat(generate-id($msgnode),generate-id())" />
       </xsl:attribute>
       <xsl:apply-templates select="* | text()">
 	<xsl:with-param name="msgnode" select="$msgnode" />
-      </xsl:apply-templates>
-    </a>
+      </xsl:apply-templates></a>
   </xsl:template>
   <xsl:template name="inslink">
     <xsl:param name="msgnode" />
