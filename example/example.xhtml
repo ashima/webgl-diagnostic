@@ -4,9 +4,8 @@
 .webgldiag-message { display: none; }
 .webgldiag-override { font-size: 70% }
 </style>
-<!--<script type="text/javascript" src="../js/webgldiagdata.js"></script>
-<script type="text/javascript" src="../js/webgldiagnostic.js"></script>-->
-<script type="text/javascript" src="../js/webgldiag.min.js"></script>
+<script type="text/javascript" src="../js/webgldiagdata.js"></script>
+<script type="text/javascript" src="../js/webgldiagnostic.js"></script>
 <script type="text/javascript" src="example.js"></script>
 </head>
 <body onload="WebGLDiagnostic.diagnose(out)">
@@ -17,7 +16,7 @@
   <div class="webgldiag-message" id="webgldiag-change">
     <p><diag:message id="no-support" /></p>
     <p><diag:message id="obsolete" /><diag:message id="change" /></p>
-    <ul name="webgldiag-browser-list"></ul>
+    <ul id="webgldiag-change-browser-list"></ul>
     <p class="webgldiag-override">
       <a href="http://ashimagames.com/ooman/tutorial.html">
 	<diag:message id="override" />
@@ -36,7 +35,7 @@
   <div class="webgldiag-message" id="webgldiag-plugin">
     <p><diag:message id="no-support" /></p>
     <p><diag:message id="plugin" /></p>
-    <ul name="webgldiag-plugin-list"></ul>
+    <ul id="webgldiag-plugin-plugin-list"></ul>
     <p><diag:message id="plugin-restart" /></p>
     <p class="webgldiag-override">
       <a href="http://ashimagames.com/ooman/tutorial.html">

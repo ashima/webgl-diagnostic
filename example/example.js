@@ -1,13 +1,24 @@
 function $$(i) { return document.getElementById(i); }
-function nmap(name,fn) {
-  var es = document.getElementsByName(name);
-  for (var i = 0; i < es.length; i++) { fn(es[i]); }
+var ns = "webgldiag-";
+var pageids = {};
+function insert(name,id) {
+  if (typeof(pageids[name]) == "undefined") {
+    pageids[name] = [];
+  }
+  pageids[name].push(id);
+}
+function map(name,fn) {
+  var idl = pageids[name];
+  if (typeof(idl) != "undefined") {
+    for (var i = 0; i < idl.length; i++) {
+      fn($$(ns+idl[i]));
+    }
+  }
 }
 function html(v) { return function (e) { e.innerHTML = v; }; }
 function href(v) { return function (e) { e.href = v; }; }
 function show(e) { e.style.display = "block"; }
 function hide(e) { e.style.display = "none"; }
-var ns = "webgldiag-";
 
 var out = {
   canvasid: "test-canvas", // string
@@ -15,20 +26,14 @@ var out = {
 	   supported: true }, // { trouble: bool; supported: bool } option
   // unit -> unit
   reset: function () {
-    nmap(ns+"browser-list",html(""));
-    nmap(ns+"plugin-list",html(""));
-    hide($$(ns+"change"));
-    hide($$(ns+"upgrade"));
-    hide($$(ns+"plugin"));
-    hide($$(ns+"experimental-plugin"));
-    hide($$(ns+"experimental-change"));
-    hide($$(ns+"trouble"));
-    hide($$(ns+"trouble-browser"));
-    hide($$(ns+"trouble-nobrowser"));
-    hide($$(ns+"trouble-driver"));
-    hide($$(ns+"trouble-nodriver"));
-    hide($$(ns+"ok"));
-    hide($$(ns+"ok-experimental"));
+    pageids["messages"] = ["change", "upgrade", "plugin",
+			  "experimental-plugin", "experimental-change",
+			  "trouble", "trouble-browser", "trouble-nobrowser",
+			  "trouble-driver", "trouble-nodriver",
+			  "ok", "ok-experimental"];
+    map("messages",hide);
+    pageids["lists"] = ["change-browser-list", "plugin-plugin-list"];
+    map("lists",html(""));
   },
   // platform -> browser -> unit
   change: function(p, b) {
@@ -44,25 +49,26 @@ var out = {
       }
       bl[bl.length] = "<li><a href='"+url+"'>"+name+"</a></li>";
     }
-    nmap(ns+"browser-name",html(b.name));
-    nmap(ns+"browser-version",html(b.version));
-    nmap(ns+"platform-name",html(p.id));
-    nmap(ns+"browser-list",html(bl.join("")));
+    map("browser-name",html(b.name));
+    map("browser-version",html(b.version));
+    map("platform-name",html(p.id));
+    html(bl.join(""))($$(ns+"change-browser-list"));
     show($$(ns+"change"));
   },
   // browser -> url -> unit
   upgrade: function(b,url) {
-    nmap(ns+"browser-name",html(b.name));
-    nmap(ns+"browser-version",html(b.version));
-    nmap(ns+"browser-upgrade",href(url));
+    map("browser-name",html(b.name));
+    map("browser-version",html(b.version));
+    map("browser-upgrade",href(url));
     show($$(ns+"upgrade"));
   },
   // browser -> url label -> unit
   plugin: function (b,link) { // called once for each plugin
     var la = "<li><a href='"+link.v.download+"'>"+link.label+"</a></li>";
-    nmap(ns+"browser-name",html(b.name));
-    nmap(ns+"browser-version",html(b.version));
-    nmap(ns+"plugin-list",function (e) { e.innerHTML = e.innerHTML + la; });
+    map("browser-name",html(b.name));
+    map("browser-version",html(b.version));
+    var e = $$(ns+"plugin-plugin-list");
+    e.innerHTML = e.innerHTML + la;
     show($$(ns+"plugin"));
   },
   // browser -> url label -> unit
@@ -74,16 +80,16 @@ var out = {
     if (b == null) {
       show($$(ns+"trouble-nobrowser"));
     } else {
-      nmap(ns+"browser-name",html(b.name));
-      nmap(ns+"browser-trouble",href(url));
+      map("browser-name",html(b.name));
+      map("browser-trouble",href(url));
       show($$(ns+"trouble-browser"));
     }
 
     if (driver == null) {
       show($$(ns+"trouble-nodriver"));
     } else {
-      nmap(ns+"driver-upgrade",href(driver.v));
-      nmap(ns+"driver-vendor",html(driver.label));
+      map("driver-upgrade",href(driver.v));
+      map("driver-vendor",html(driver.label));
       show($$(ns+"trouble-driver"));
     }
     show($$(ns+"trouble"));
