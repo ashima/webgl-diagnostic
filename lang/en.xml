@@ -7,7 +7,7 @@
   <messages>
     <message id="no-support">
       It looks like you are
-      using <browser field="name" />&#160;<browser field="version" />&#160;
+      using <browser field="name" />&#160;<browser field="version" />
       which does not support WebGL.
     </message>
 
