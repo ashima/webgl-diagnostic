@@ -7,8 +7,8 @@
   <messages>
     <message id="no-support">
       It looks like you are
-      using <browser field="name" /> <browser field="version" /> which does not
-      support WebGL.
+      using <browser field="name" />&nbsp;<browser field="version" />&nbsp;
+      which does not support WebGL.
     </message>
 
     <message id="obsolete">
