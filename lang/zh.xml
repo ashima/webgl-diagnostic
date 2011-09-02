@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding="UTF-8"?>
+
+<diagnostic>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  </head>
+  <messages>
+    <message id="no-support">
+      您使用的<browser field="name" />&#160;<browser 
+        field="version" /> 浏览器不支持WebGL。
+    </message>
+
+    <message id="obsolete">
+      对不起，您的浏览器及其最新版本目前并不支持WebGL。
+    </message>
+
+    <message id="change">
+      以下是支持WebGL的浏览器，可安装于<platform field="name" />操作系统上:
+    </message>
+
+    <message id="override">
+      强制运行
+    </message>
+
+    <message id="upgrade">
+      请<browser link="upgrade">升级</browser>
+      您的浏览器到支持WegGL的最新版本。
+    </message>
+
+    <message id="plugin">
+      以下WebGL浏览器插件可用于您的浏览器:
+    </message>
+
+    <message id="plugin-restart">
+      插件安装完毕后，请您重新启动浏览器。
+    </message>
+
+    <message id="experimental-plugin">
+      以下测试版WebGL浏览器插件可用于您的浏览器:
+    </message>
+
+    <message id="experimental-change">
+      以下是支持WebGL的测试版浏览器，可安装于<platform 
+        field="name" />操作系统上:
+    </message>
+
+    <message id="trouble">
+      您的浏览器支持WebGL，但该项功能目前被禁止或不可用。
+    </message>
+    
+    <message id="trouble-nodriver">
+      通常导致WebGL不可用的原因是显卡驱动程序没有更新到最新版本。
+    </message>
+
+    <message id="trouble-driver">
+      <driver link="upgrade">更新您的<driver field="vendor" />显卡驱动程序
+      </driver>到最新版本并重新启动计算机，这样可能会对运行WebGL有所帮助。
+    </message>
+
+    <message id="trouble-nobrowser">
+      请访问您浏览器的官方网站以获取更多信息。
+    </message>
+    
+    <message id="trouble-browser">
+      <browser link="trouble">访问<browser 
+        field="name"/>的官方网站</browser>以获取更多信息。
+    </message>
+    
+    <message id="experimental-ok">
+      您的浏览器在WebGL支持上仍处于测试阶段，有些网页内容可能无法正确显示。
+    </message>
+
+    <message id="no-script">
+      体验WebGL内容需要Javascript。请在您的浏览器中启用Javascript。
+    </message>
+  </messages>
+</diagnostic>
