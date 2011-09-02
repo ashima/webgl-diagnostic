@@ -25,28 +25,4 @@
     </head>
   </xsl:template>
 
-  <xsl:template name="field">
-    <xsl:param name="msgnode" />
-    <span>
-      <xsl:attribute name="id">
-	<xsl:text>webgldiag-</xsl:text>
-	<xsl:call-template name="genid">
-	  <xsl:with-param name="msgnode" select="$msgnode" />
-	</xsl:call-template>
-      </xsl:attribute>
-    </span>
-  </xsl:template>
-  <xsl:template name="link">
-    <xsl:param name="msgnode" />
-    <a><xsl:attribute name="id">
-	<xsl:text>webgldiag-</xsl:text>
-	<xsl:call-template name="genid">
-	  <xsl:with-param name="msgnode" select="$msgnode" />
-	</xsl:call-template>
-      </xsl:attribute>
-      <xsl:apply-templates select="* | text()">
-	<xsl:with-param name="msgnode" select="$msgnode" />
-    </xsl:apply-templates></a>
-  </xsl:template>
-
 </xsl:stylesheet>
