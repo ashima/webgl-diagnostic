@@ -6,7 +6,7 @@ system information to you in a bug report. The software is free and open
 source under the MIT Expat license which can be found in the LICENSE
 file.
 
-webgl-diagnostic features:
+## Features
 
 * Up-to-date and accurate browser and platform detection (cf. get.webgl.org)
 * Easy system profile report generation for high quality user bug reports
@@ -19,7 +19,23 @@ webgl-diagnostic features:
 * WebGL capability sniffing
 * Your contributions
 
+## Usage
+
+### WebGL Onboarding
+
+#### Requirements
+
+#### Localization
+
+#### Driver Information
+
+#### Updates
+
+### Bug Report System Profiles
+
+#### Capability Sniffing
+
+#### Updates
+
 Data updates? Bugs? Browser compatibility issues? Translations? We would
 love to hear from you!
-
-
