@@ -25,17 +25,45 @@ file.
 
 #### Requirements
 
+You will need an XSLT 1.0 processor (e.g. xsltproc from libxml/libxslt)
+and a make program (e.g. GNU Make) to build localized HTML versions of
+the onboarder. If you have these tools, you can run 'make' in example/
+to generate example localizations.
+
 #### Localization
+
+Onboarding messages are provided in an ad-hoc XML dialect in lang/
+organized by ISO 639-1 code or IETF language code (see RFC 5646 and RFC
+4647). A simple language resource processor is provided as lang/message.xsl.
 
 #### Driver Information
 
+Driver information is presently gleaned from the RENDERER string on a WebGL
+context unless the user is on Mac OS X, in which case the driver vendor
+is reported as "Apple".
+
 #### Updates
+
+The get.webgl.org/ directory contains the scripts that the author uses
+to stay up-to-date on changes to this onboarding site. These scripts
+make If-Not-Modified-Since requests using curl to reduce the burden on
+the get.webgl.org host. Users of this software should monitor
+this repository or the get.webgl.org site directly to stay current on
+ecosystem changes and prevent bit-rot.
+
+If this monitoring and maintenance is not possible or
+desirable, we recommend linking users to get.webgl.org.
 
 ### Bug Report System Profiles
 
-#### Capability Sniffing
-
 #### Updates
+
+The ext_reg/ directory contains the scripts that the author uses to stay
+up-to-date on new WebGL extensions. These scripts make
+If-Not-Modified-Since requests using curl to reduce the burden on the
+Khronos host.
+
+##
 
 Data updates? Bugs? Browser compatibility issues? Translations? We would
 love to hear from you!
