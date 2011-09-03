@@ -73,6 +73,8 @@ reduce the burden on the Khronos host.
 
 * The Khronos WebGL working group without whose work, none of this would
   be possible
+* [webgl-bench](http://webgl-bench.appspot.com/) which has been
+  collecting useful WebGL benchmark statistics for the community
 
 ## Feedback
 
