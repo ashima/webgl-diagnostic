@@ -66,7 +66,7 @@ reduce the burden on the Khronos host.
 ## Credits
 
 * David Sheets (JavaScript, XSLT, author)
-* Yuan Lian (Chinese translation)
+* Yuan Lian (Simplified Chinese translation)
 * Chris Lee (Welsh translation)
 
 ## Special Thanks
