@@ -4,7 +4,7 @@
 include('choose_lang.php');
 if ($chosenlang == "zh") {
   include 'example.zh.html';
-else {
+} else {
   include 'example.en.html';
 }
 ?>
