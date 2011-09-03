@@ -63,6 +63,17 @@ up-to-date on new WebGL extensions. These scripts make
 If-Not-Modified-Since requests using [curl](http://curl.haxx.se/) to
 reduce the burden on the Khronos host.
 
+## Credits
+
+* David Sheets (JavaScript, XSLT, author)
+* Yuan Lian (Chinese translation)
+* Chris Lee (Welsh translation)
+
+## Special Thanks
+
+* The Khronos WebGL working group without whose work, none of this would
+  be possible
+
 ## Feedback
 
 Data updates? Bugs? Browser compatibility issues? Translations? We would
