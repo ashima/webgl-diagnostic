@@ -4,17 +4,15 @@
 // http://www.w3.org/QA/2006/02/content_negotiation
 
 
-// we first make sure the  language-negotiation variables we are about
-to use are unset
+// we first make sure the  language-negotiation variables we are about to use are unset
 unset($chosenlang); // will ultimately hold our choice of language
-unset ($lang_neg_reason); // at the end of the negotiation, this
-variable will store what part of the algorithm 
+unset ($lang_neg_reason); // at the end of the negotiation, this variable will store what part of the algorithm 
                          //  was used to find the best language variant.
 
 // first, we check whether the client has sent us, in a cookie,
 // recorded language preference from earlier interactions.
 // this choice should have precedence over other mechanisms
-unset($cookie_lang);  
+unset($cookie_lang);
 if( $_COOKIE['lang'])
 {
         $cookie_lang = $_COOKIE['lang'];
@@ -24,12 +22,9 @@ if( $_COOKIE['lang'])
                 $lang_neg_reason = "cookie";
         }
 }
-// if the cookie has been found, then the variable $chosenlang has been
-filled. Our job is finished.
-// if however no cookie was found and $chosenlang is still unset, we
-proceed with some basic negociation
-// the following code parses the Accept-Language HTTP header sent by the
-client
+// if the cookie has been found, then the variable $chosenlang has been filled. Our job is finished.
+// if however no cookie was found and $chosenlang is still unset, we proceed with some basic negociation
+// the following code parses the Accept-Language HTTP header sent by the client
 //   and tries to see if either English or Japanese are accepted
 if (! isset($chosenlang))
 {
@@ -46,12 +41,12 @@ if (! isset($chosenlang))
                         $acceptlang[$i] = trim($Lang[0]);
                 }
         }
-        else $acceptlang = array('en', 'ja');
+        else $acceptlang = array('en', 'zh');
         for ($i = 0; $i < count($acceptlang);  $i++)
         {
                 $Lang_split = explode('-', $acceptlang[$i]);
                 $Lang_pre = trim($Lang_split[0]);
-                if ($Lang_pre == "en" or $Lang_pre == "ja")
+                if ($Lang_pre == "en" or $Lang_pre == "zh")
                 {
                         $chosenlang = $Lang_pre;
                         $i = count($acceptlang)+1;
@@ -60,10 +55,8 @@ if (! isset($chosenlang))
         }
 }
 // At this point, we should have a $chosenlang
-// in some cases however (if the browser does not claim to accept either
-Japanese or English)
-// then the "negociation" failed. We could send an HTTP error "406 Not
-acceptable", but we prefer
+// in some cases however (if the browser does not claim to accept either Chinese or English)
+// then the "negociation" failed. We could send an HTTP error "406 Not acceptable", but we prefer
 // to choose a default language to serve: in this case, english.
 if (! isset($chosenlang))
 {
