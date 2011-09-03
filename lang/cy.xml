@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding="UTF-8"?>
+
+<diagnostic>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  </head>
+  <messages>
+    <message id="no-support">
+      Mae'n edrych fel rydych yn ei ddefnyddio 
+      <browser field="name" />&#160;<browser field="version" /> 
+      nad yw'n cefnogi WebGL
+    </message>
+
+    <message id="obsolete">
+      Yn anffodus, nid oes unrhyw fersiynau newydd o'r eich porwr gyda
+       cynnal am WebGL.
+    </message>
+
+    <message id="change">
+      Efallai y bydd y porwyr dilynol gyda cynnal am WebGL fod ar 
+      gael ar gyfer<platform field="name" />:
+    </message>
+
+    <message id="override">
+      Rwy'n gwybod beth ydw i'n gwneud. Gadewch i mi roi cynnig beth bynnag.
+    </message>
+
+    <message id="upgrade">
+      Os gwelwch yn dda <browser link="upgrade">uwchraddio</browser>eich 
+      porwr i fersiwn newydd i weld y cynnwys WebGL.
+    </message>
+
+    <message id="plugin">
+      Mae'r estynaid WebGL dilynol ar gael ar gyfer eich porwr:
+    </message>
+
+    <message id="plugin-restart">
+      Ar ôl i chi arsefydlu yr estyniad, cofiwch ailgychwyn eich porwr.
+    </message>
+
+    <message id="experimental-plugin">
+      Mae'r estynaid arbrofol dilynol are gyfer WebGL ar gael ar gyfer eich porwr:
+    </message>
+
+    <message id="experimental-change">
+      Efallai y bydd y porwyr arbrofol dilynol gyda cynnal am WebGL are 
+      gael ar gyfer<platform field="name" />:
+    </message>
+
+    <message id="trouble">
+      Mae eich porwr yn cael cynnal am WebGL, ond mae'r estyniad wedi'i anablu.
+    </message>
+    
+    <message id="trouble-nodriver">
+      Achos cyffredin o broblemau WebGL yw hen meddalwedd graffeg. 
+      Gwnewch yn siŵr bod eich meddalwedd graffeg yw'r fersiwn ddiweddaraf.
+    </message>
+
+    <message id="trouble-driver">
+      Gall helpu i<driver link="upgrade">uwchraddio eich<driver 
+      field="vendor" />meddalwedd graffeg</driver>i'r fersiwn 
+      diweddaraf ac ailgychwyn eich chyfrifiadur
+    </message>
+
+    <message id="trouble-nobrowser">
+      Ewch i wefan cefnogi eich porwr am fwy o wybodaeth.
+    </message>
+    
+    <message id="trouble-browser">
+      <browser link="trouble">Ewch i wefan cynnal <browser 
+        field="name" /></browser> am fwy o wybodaeth
+    </message>
+    
+    <message id="experimental-ok">
+      Mae eich porwr yn dangos bod ei gefnogaeth i WebGL yn 
+      arbrofol. Efallai y bydd problemau gyda rhan o'r cynnwys.
+    </message>
+
+    <message id="no-script">
+      Mae angen javascript i ddangos cynnwys WebGL. Os gwelwch yn dda 
+      galluogi Javascript yn eich porwr.
+    </message>
+  </messages>
+</diagnostic>
