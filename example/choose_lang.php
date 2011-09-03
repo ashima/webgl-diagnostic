@@ -41,12 +41,12 @@ if (! isset($chosenlang))
                         $acceptlang[$i] = trim($Lang[0]);
                 }
         }
-        else $acceptlang = array('en', 'zh');
+        else $acceptlang = array('en', 'zh', 'cy');
         for ($i = 0; $i < count($acceptlang);  $i++)
         {
                 $Lang_split = explode('-', $acceptlang[$i]);
                 $Lang_pre = trim($Lang_split[0]);
-                if ($Lang_pre == "en" or $Lang_pre == "zh")
+                if ($Lang_pre == "en" or $Lang_pre == "zh" or $Lang_pre == "cy")
                 {
                         $chosenlang = $Lang_pre;
                         $i = count($acceptlang)+1;
