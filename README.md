@@ -71,6 +71,8 @@ reduce the burden on the Khronos host.
 
 ## Special Thanks
 
+* [W3C Blog](http://www.w3.org/QA/2006/02/content_negotiation) which
+  published the HTTP language content negotiation PHP code in example/
 * The Khronos WebGL working group without whose work, none of this would
   be possible
 * [webgl-bench](http://webgl-bench.appspot.com/) which has been
