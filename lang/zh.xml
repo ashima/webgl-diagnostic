@@ -52,8 +52,8 @@
     </message>
 
     <message id="trouble-driver">
-      <driver link="upgrade">更新您的<driver field="vendor"
-      />显卡驱动程序</driver>到最新版本并重新启动计算机，
+      <driver link="upgrade">更新您的<driver 
+        field="vendor"/>显卡驱动程序</driver>到最新版本并重新启动计算机，
       这样可能会对运行WebGL有所帮助。
     </message>
 
