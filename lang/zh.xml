@@ -23,8 +23,7 @@
     </message>
 
     <message id="upgrade">
-      请<browser link="upgrade">升级</browser>
-      您的浏览器到支持WegGL的最新版本。
+      请<browser link="upgrade">升级</browser>您的浏览器到支持WegGL的最新版本。
     </message>
 
     <message id="plugin">
@@ -53,17 +52,18 @@
     </message>
 
     <message id="trouble-driver">
-      <driver link="upgrade">更新您的<driver field="vendor" />显卡驱动程序
-      </driver>到最新版本并重新启动计算机，这样可能会对运行WebGL有所帮助。
+      <driver link="upgrade">更新您的<driver field="vendor"
+      />显卡驱动程序</driver>到最新版本并重新启动计算机，
+      这样可能会对运行WebGL有所帮助。
     </message>
 
     <message id="trouble-nobrowser">
-      请访问您浏览器的官方网站以获取更多信息。
+      请访问您浏览器的技术支持网站以获取更多信息。
     </message>
     
     <message id="trouble-browser">
       <browser link="trouble">访问<browser 
-        field="name"/>的官方网站</browser>以获取更多信息。
+        field="name"/>的技术支持网站</browser>以获取更多信息。
     </message>
     
     <message id="experimental-ok">
