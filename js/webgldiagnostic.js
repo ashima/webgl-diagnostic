@@ -100,13 +100,13 @@ WebGLDiagnostic['detectPlatform'] = function() {
 };
 
 WebGLDiagnostic['detectDriver'] = function(canvasid) {
-  var gl = this['webGLContext'](canvasid), renderer, v;
-  if (!gl) { return null; }
-  renderer = gl.getParameter(gl.RENDERER);
-
   if (navigator.userAgent.match(/Mac OS X/)) {
     return this['drivers']["osx"];
   }
+
+  var gl = this['webGLContext'](canvasid), renderer, v;
+  if (!gl) { return null; }
+  renderer = gl.getParameter(gl.RENDERER);
 
   for (v in this['drivers']) {
     if ((new RegExp(v, "i")).test(renderer)) {
