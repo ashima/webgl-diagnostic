@@ -46,7 +46,7 @@ is reported as "Apple".
 
 The get.webgl.org/ directory contains the scripts that the author uses
 to stay up-to-date on changes to this onboarding site. These scripts
-make If-Not-Modified-Since requests using [curl](http://curl.haxx.se/)
+make If-Modified-Since requests using [curl](http://curl.haxx.se/)
 to reduce the burden on the get.webgl.org host. Users of this software
 should monitor this repository or the get.webgl.org site directly to
 stay current on ecosystem changes and prevent bit-rot.
@@ -60,7 +60,7 @@ desirable, we recommend linking users to get.webgl.org.
 
 The ext_reg/ directory contains the scripts that the author uses to stay
 up-to-date on new WebGL extensions. These scripts make
-If-Not-Modified-Since requests using [curl](http://curl.haxx.se/) to
+If-Modified-Since requests using [curl](http://curl.haxx.se/) to
 reduce the burden on the Khronos host.
 
 ## Credits
