@@ -9,13 +9,23 @@ unset($chosenlang); // will ultimately hold our choice of language
 unset($lang_neg_reason); // at the end of the negotiation, this variable will store what part of the algorithm 
                          //  was used to find the best language variant.
 
+// <EDIT(dsheets) 2011-9-3>
+function lang_of_filename($filename) {
+  return substr($filename,strlen("example."),2);
+}
+
+$defaultlang = "en";
+$translations = array_fill_keys(array_map("lang_of_filename",
+					  glob("example.??.html")),true);
+// </EDIT>
+
 // first, we check whether the client has sent us, in a cookie,
 // recorded language preference from earlier interactions.
 // this choice should have precedence over other mechanisms
 unset($cookie_lang);
 if( $_COOKIE['lang']) {
   $cookie_lang = $_COOKIE['lang'];
-  if (($cookie_lang == "en") or ($cookie_lang == "ja")) {
+  if ($translations[$cookie_lang]) {
     $chosenlang = $cookie_lang;
     $lang_neg_reason = "cookie";
   }
@@ -36,11 +46,11 @@ if (! isset($chosenlang)) {
       $acceptlang[$i] = trim($Lang[0]);
     }
   }
-  else $acceptlang = array('en', 'zh', 'cy');
+  else $acceptlang = array($defaultlang); // default to English
   for ($i = 0; $i < count($acceptlang);  $i++) {
     $Lang_split = explode('-', $acceptlang[$i]);
     $Lang_pre = trim($Lang_split[0]);
-    if ($Lang_pre == "en" or $Lang_pre == "zh" or $Lang_pre == "cy") {
+    if ($translations[$Lang_pre]) {
       $chosenlang = $Lang_pre;
       $i = count($acceptlang)+1;
       $lang_neg_reason = "http_nego";
@@ -53,7 +63,7 @@ if (! isset($chosenlang)) {
 // to choose a default language to serve: in this case, english.
 if (! isset($chosenlang)) {
   // our default
-  $chosenlang = "en";
+  $chosenlang = $defaultlang;
   $lang_neg_reason = "default";
 }
 
