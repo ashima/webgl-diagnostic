@@ -20,7 +20,7 @@ WebGLDiagnostic['exts'] = [
 WebGLDiagnostic['drivers'] = {
   "nvidia":{'label':"NVIDIA", 'v':"http://www.nvidia.com/Download/index.aspx"},
   "ati":{'label':"ATI", 'v':"http://support.amd.com/us/gpudownload/Pages/index.aspx"},
-  "osx":{'label':"Apple", 'v':"http://www.apple.com/macosx/"}
+  "osx":{'label':"Apple", 'v':"https://discussions.apple.com/message/16089832#16089832"}
 };
 
 // type	decision = {
@@ -41,8 +41,7 @@ WebGLDiagnostic['decisions'] = {
   },
 
   "Safari" :
-  { 'trouble': "http://fairerplatform.com/2011/05/new-in-os-x-lion-safari-5-1-brings-webgl-do-not-track-and-more/",
-    'platforms':
+  { 'platforms':
     { "iPhone/iPod":
       { 'trouble': "http://www.apple.com/support/iphone/",
 	'upgrade': "http://www.apple.com/ios/"},
@@ -50,7 +49,7 @@ WebGLDiagnostic['decisions'] = {
       { 'trouble': "http://www.apple.com/support/ipad/",
 	'upgrade': "http://www.apple.com/ios/"},
       "Mac":
-      { 'trouble': "http://fairerplatform.com/2011/05/new-in-os-x-lion-safari-5-1-brings-webgl-do-not-track-and-more/",
+      { 'trouble': "https://discussions.apple.com/message/16065326#16065326",
         'download': "http://www.apple.com/safari/",
 	'upgrade': "http://www.apple.com/safari/"}
     }
