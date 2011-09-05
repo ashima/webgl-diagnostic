@@ -10,13 +10,13 @@ unset($lang_neg_reason); // at the end of the negotiation, this variable will st
                          //  was used to find the best language variant.
 
 // <EDIT(dsheets) 2011-9-3>
-$pagepathprefix = "example.";
+define('PAGEPATHPREFIX', "example.");
 function lang_of_filename($filename) {
-  return substr($filename,strlen($pagepathprefix),2);
+  return substr($filename,strlen(constant('PAGEPATHPREFIX')),2);
 }
 
 $defaultlang = "en";
-$trans_uris = glob($pagepathprefix."??.html");
+$trans_uris = glob(constant('PAGEPATHPREFIX')."??.html");
 $translations = array_fill_keys(array_map("lang_of_filename",
 					  $trans_uris),
 				true);
