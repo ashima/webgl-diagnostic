@@ -16,8 +16,9 @@ function lang_of_filename($filename) {
 }
 
 $defaultlang = "en";
+$trans_uris = glob($pagepathprefix."??.html");
 $translations = array_fill_keys(array_map("lang_of_filename",
-					  glob($pagepathprefix."??.html")),
+					  $trans_uris),
 				true);
 // </EDIT>
 
