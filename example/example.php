@@ -5,7 +5,6 @@ include('php/choose_lang.php');
 header("Content-Language: $chosenlang");
 header("Vary: Accept-Language");
 header("Content-Location: example.$chosenlang.html");
-include('example.$chosenlang.html');
+include('example.'.$chosenlang.'.html');
 
 ?>
-   
