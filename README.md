@@ -33,7 +33,7 @@ to generate example localizations.
 #### Localization
 
 Onboarding messages are provided in an ad-hoc XML dialect in lang/
-organized by [HTTP language code](http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.10) ([ISO 639-1](http://en.wikipedia.org/wiki/ISO_639-1)). A simple language resource processor is provided as lang/message.xsl.
+organized by [HTTP language code](http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.10) ([ISO 639-1](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)). A simple language resource processor is provided as lang/message.xsl.
 
 #### Driver Information
 
