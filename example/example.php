@@ -6,7 +6,7 @@ header("Vary: Accept-Language");
 header("Content-Language: $chosenlang");
 header("Content-Location: example.$chosenlang.html");
 header("X-Language-Negotiation-Reason: $lang_neg_reason");
-header("X-Translations: ".implode(", ",$translations));
+header("X-Translations: ".implode(", ",array_keys($translations)));
 include('example.'.$chosenlang.'.html');
 
 ?>
