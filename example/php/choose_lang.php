@@ -10,7 +10,7 @@ unset($lang_neg_reason); // at the end of the negotiation, this variable will st
                          //  was used to find the best language variant.
 
 // <EDIT(dsheets) 2011-9-3>
-$pagepathprefix = "example.";
+$pagepathprefix = "../example.";
 function lang_of_filename($filename) {
   return substr($filename,strlen($pagepathprefix),2);
 }
