@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 
 <xsl:stylesheet version="1.0"
-		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-		xmlns:diag="http://github.com/ashima/webgl-diagnostic">
+		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:template match="diag:message">
+  <xsl:template match="message">
+    <xsl:param name="messages" select="$exprs/messages" />
     <xsl:variable name="id" select="@id" />
-    <xsl:if test="$exprs/messages/message[@id=$id]//browser
-		  or $exprs/messages/message[@id=$id]//platform
-		  or $exprs/messages/message[@id=$id]//driver">
+    <xsl:if test="$messages/message[@id=$id]//browser
+		  or $messages/message[@id=$id]//platform
+		  or $messages/message[@id=$id]//driver">
       <script type="text/javascript">
 	<xsl:apply-templates
-	   select="$exprs/messages/message[@id=$id]/node()" mode="js">
+	   select="$messages/message[@id=$id]/node()" mode="js">
 	  <xsl:with-param name="msgnode" select="." />
 	</xsl:apply-templates>
       </script>
     </xsl:if>
     <xsl:apply-templates
-	select="$exprs/messages/message[@id=$id]/node()">
+	select="$messages/message[@id=$id]/node()">
       <xsl:with-param name="msgnode" select="." />
     </xsl:apply-templates>
   </xsl:template>
