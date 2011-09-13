@@ -30,7 +30,7 @@ var out = {
 			  "experimental-plugin", "experimental-change",
 			  "trouble", "trouble-browser", "trouble-nobrowser",
 			  "trouble-driver", "trouble-nodriver",
-			  "ok", "ok-experimental"];
+			  "ok", "experimental-ok"];
     map("messages",hide);
     pageids["lists"] = ["change-browser-list", "plugin-plugin-list"];
     map("lists",html(""));
