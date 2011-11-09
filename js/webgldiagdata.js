@@ -13,7 +13,7 @@ WebGLDiagnostic['context_ids'] = [
 
 // type ext = string
 WebGLDiagnostic['exts'] = [
-"OES_texture_float","OES_texture_half_float","WEBKIT_lose_context",
+"OES_texture_float","OES_texture_half_float","WEBGL_EXT_lose_context",
 "OES_standard_derivatives","OES_vertex_array_object","WEBGL_debug_renderer_info",
 "WEBGL_debug_shaders"];
 
