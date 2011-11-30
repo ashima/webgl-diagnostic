@@ -57,17 +57,14 @@ WebGLDiagnostic['decisions'] = {
   },
 
   "Opera" :
-  { 'platforms':
-    { "Windows":
-      { 'experimental':
-	{ 'label': "Opera Developer Preview",
-	  'v': { 'trouble': "http://my.opera.com/core/blog/2011/02/28/webgl-and-hardware-acceleration-2",
-	       'download': "http://my.opera.com/core/blog/2011/02/28/webgl-and-hardware-acceleration-2"}
-	}
-      }
+  { 'experimental':
+    { 'label': "Opera Next",
+      'v': { 'trouble': "http://my.opera.com/desktopteam/blog/",
+	     'download': "http://www.opera.com/browser/next/",
+             'upgrade': "http://www.opera.com/browser/next/" }
     }
   },
-
+    
   "Explorer" :
   { 'plugins': [
     { 'label': "Google Chrome Frame",
